@@ -1187,13 +1187,19 @@ Wie die meisten Versions-Kontroll-Systeme hat auch Git die Fähigkeit, spezielle
 
 Listing the available tags in Git is straightforward. Just type `git tag`:
 
+Anzeigen der verfügbaren Tags in Git geht einfach geradeaus. Einfach 'git tag' eingeben:
+
 	$ git tag
 	v0.1
 	v1.3
 
 This command lists the tags in alphabetical order; the order in which they appear has no real importance.
 
+Das Kommando listet die Tag in alphabetischer Reihenfolge; die Anordnung, in der sie erscheinen, hat keine wirkliche Wichtigkeit.
+
 You can also search for tags with a particular pattern. The Git source repo, for instance, contains more than 240 tags. If you’re only interested in looking at the 1.4.2 series, you can run this:
+
+Du kannst auch noch Tags, die einem bestimmten Muster folgen, suchen. Dieses Git-Source-Repo, zum Beispiel, enthält mehr als 249 Tags. Wenn du an den Tags der 1.4.2er Reihe interessiert bist, kannst du so vorgehen:
 
 	$ git tag -l 'v1.4.2.*'
 	v1.4.2.1
@@ -1203,11 +1209,19 @@ You can also search for tags with a particular pattern. The Git source repo, for
 
 ### Creating Tags ###
 
+### Tags erstellen ###
+
 Git uses two main types of tags: lightweight and annotated. A lightweight tag is very much like a branch that doesn’t change — it’s just a pointer to a specific commit. Annotated tags, however, are stored as full objects in the Git database. They’re checksummed; contain the tagger name, e-mail, and date; have a tagging message; and can be signed and verified with GNU Privacy Guard (GPG). It’s generally recommended that you create annotated tags so you can have all this information; but if you want a temporary tag or for some reason don’t want to keep the other information, lightweight tags are available too.
+
+Git benutzt zwei Haupt-Tag-Typen: leichte (lightweight) und kommentiert (annotated). Ein leichter Tag ähnelt sehr einem Branch, der sich nicht ändert - es ist einfach ein Pointer auf einen speziellen Commit. Kommentierte Tags sind als volle Objekte in der Git-Datenbank abgespeichert. Über diese wird eine Checksumme errechnet; die enthalten den Namen des Tag erstellers (Tagger), die Email-Adresse, und das Datum; sie haben eine Tagging Nachricht/Beschreibung; und können durch GNU Privacy Guard (GPG) signiert und verifiziert werden. Generell ist es empfohlen, kommentierte Tags zu erstellen, sodass du all diese Informationen haben kannst; aber wenn du einen temporären Tag erstellen willst, oder die Informationen (evt.) nicht freigeben willst, sind leichte Tags ebenfalls verfügbar.
 
 ### Annotated Tags ###
 
+### Kommentierte Tags ###
+
 Creating an annotated tag in Git is simple. The easiest way is to specify `-a` when you run the `tag` command:
+
+Einen kommentierten Tag in Git anzulegen ist simpel. Am Einfachsten geht es mit dem 'tag'-Kommando, mit einem '-a' als Anhang:
 
 	$ git tag -a v1.4 -m 'my version 1.4'
 	$ git tag
@@ -1217,7 +1231,11 @@ Creating an annotated tag in Git is simple. The easiest way is to specify `-a` w
 
 The `-m` specifies a tagging message, which is stored with the tag. If you don’t specify a message for an annotated tag, Git launches your editor so you can type it in.
 
+Das '-m' spezfiziert eine Tagging-Nachricht, welche im Tag gespeichert wird. Wenn du keine Nachricht beim Anlegen eines kommentierten Tags angibst wird Git deinen Editor öffnen, damit du sie eintippen kannst.
+
 You can see the tag data along with the commit that was tagged by using the `git show` command:
+
+Du kannst die Tag-Daten zusammen mit dem entsprechenden Commit, der getagged wurde, sehen, indem du 'git show' eingibst:
 
 	$ git show v1.4
 	tag v1.4
@@ -1234,9 +1252,15 @@ You can see the tag data along with the commit that was tagged by using the `git
 
 That shows the tagger information, the date the commit was tagged, and the annotation message before showing the commit information.
 
+Das zeigt Informationen über den Tagger, das Datum, an dem der Commit getagged wurde, und den dazugehörigen Kommentar, vor den (eigentlichen) Commit-Informationen.
+
 ### Signed Tags ###
 
+### Signierte Tags ###
+
 You can also sign your tags with GPG, assuming you have a private key. All you have to do is use `-s` instead of `-a`:
+
+Du kannst deine Tags auch mit PHP signieren, vorrausgesetzt du hast einen privaten Key. Alles was du tun musst ist '-s' anstatt '-a' zu benutzen.
 
 	$ git tag -s v1.5 -m 'my signed 1.5 tag'
 	You need a passphrase to unlock the secret key for
@@ -1244,6 +1268,8 @@ You can also sign your tags with GPG, assuming you have a private key. All you h
 	1024-bit DSA key, ID F721C45A, created 2009-02-09
 
 If you run `git show` on that tag, you can see your GPG signature attached to it:
+
+Wenn du nun 'git show' auf den Tag anwendest, kannst du die angehangene GPG-Signatur sehen:
 
 	$ git show v1.5
 	tag v1.5
@@ -1267,9 +1293,15 @@ If you run `git show` on that tag, you can see your GPG signature attached to it
 
 A bit later, you’ll learn how to verify signed tags.
 
+Ein wenig später wirst du lernen, wie man signierte Tags verifiziert.
+
 ### Lightweight Tags ###
 
+### Leichte Tags ###
+
 Another way to tag commits is with a lightweight tag. This is basically the commit checksum stored in a file — no other information is kept. To create a lightweight tag, don’t supply the `-a`, `-s`, or `-m` option:
+
+Ein anderer Weg, um Commits zu taggen, sind leichte Tags. Das ist grundsätzlich die Checksumme eines Commits, in einer Datei gespeichert - ansonsten werden keine Informationen gespeichert. Um einen leichten Tag zu erstellen, benutz einfach keine der Optionen '-a', '-s', oder '-m':
 
 	$ git tag v1.4-lw
 	$ git tag
@@ -1281,6 +1313,8 @@ Another way to tag commits is with a lightweight tag. This is basically the comm
 
 This time, if you run `git show` on the tag, you don’t see the extra tag information. The command just shows the commit:
 
+Wenn du dieses Mal 'git show' für den Tag aufrufst, siehst du keine Extra-Tag-Informationen. Das Kommando zeigt nur den Commit:
+
 	$ git show v1.4-lw
 	commit 15027957951b64cf874c3557a0f3547bd83b3ff6
 	Merge: 4a447f7... a6b4c97...
@@ -1291,7 +1325,11 @@ This time, if you run `git show` on the tag, you don’t see the extra tag infor
 
 ### Verifying Tags ###
 
+### Tags verifizieren ###
+
 To verify a signed tag, you use `git tag -v [tag-name]`. This command uses GPG to verify the signature. You need the signer’s public key in your keyring for this to work properly:
+
+Um einen siginerten Tag zu verifizieren musst du 'git tag -v [tag-name]' benutzen. Dieses Kommando benutzt GPG, um die Signatur zu verifizieren. Du benötigest den öffentlichen Schlüssel des Signieres in deinem Schlüsselbund, damit es funktioniert.
 
 	$ git tag -v v1.4.2.1
 	object 883653babd8ee7ea23e6a5c392bb739348b1eb61
@@ -1309,13 +1347,19 @@ To verify a signed tag, you use `git tag -v [tag-name]`. This command uses GPG t
 
 If you don’t have the signer’s public key, you get something like this instead:
 
+Wenn du nicht den öffentlichen Schlüssel des Signierers hast, kommt soetwas stattdessen:
+
 	gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A
 	gpg: Can't check signature: public key not found
 	error: could not verify the tag 'v1.4.2.1'
 
 ### Tagging Later ###
 
+### Später taggen ###
+
 You can also tag commits after you’ve moved past them. Suppose your commit history looks like this:
+
+Du kannst auch Commits taggen, wenn diese schon nicht mehr die aktuellsten sind. Vielleicht sieht deine Commit-History wie folgt aus:
 
 	$ git log --pretty=oneline
 	15027957951b64cf874c3557a0f3547bd83b3ff6 Merge branch 'experiment'
@@ -1331,9 +1375,13 @@ You can also tag commits after you’ve moved past them. Suppose your commit his
 
 Now, suppose you forgot to tag the project at v1.2, which was at the "updated rakefile" commit. You can add it after the fact. To tag that commit, you specify the commit checksum (or part of it) at the end of the command:
 
+(...)
+
 	$ git tag -a v1.2 9fceb02
 
 You can see that you’ve tagged the commit:
+
+Du kannst sehen, dass du den Commit getaggt hast:
 
 	$ git tag 
 	v0.1
@@ -1358,7 +1406,9 @@ You can see that you’ve tagged the commit:
 
 ### Sharing Tags ###
 
-By default, the `git push` command doesn’t transfer tags to remote servers. You will have to explicitly push tags to a shared server after you have created them.  This process is just like sharing remote branches – you can run `git push origin [tagname]`.
+By default, the `git push` command doesn’t transfer tags to remote servers. You will have to explicitly push tags to a shared server after you have created them. This process is just like sharing remote branches – you can run `git push origin [tagname]`.
+
+(...)
 
 	$ git push origin v1.5
 	Counting objects: 50, done.
@@ -1369,6 +1419,8 @@ By default, the `git push` command doesn’t transfer tags to remote servers. Yo
 	* [new tag]         v1.5 -> v1.5
 
 If you have a lot of tags that you want to push up at once, you can also use the `--tags` option to the `git push` command.  This will transfer all of your tags to the remote server that are not already there.
+
+Wenn du mehrere Tags auf einmal hochladen/pushen willst, kannst du auch die '--tags'-Option mit dem 'git push'-Kommando verwenden. Das wird alle deine Tags zu deinem Server hochladen, wenn sie nicht schon dort sind.
 
 	$ git push origin --tags
 	Counting objects: 50, done.
@@ -1384,37 +1436,63 @@ If you have a lot of tags that you want to push up at once, you can also use the
 
 Now, when someone else clones or pulls from your repository, they will get all your tags as well.
 
+Wenn nun jemand anderes dein Repository clont, oder von ihm pullt, wird er auch alle deine Tags bekommen.
+
 ## Tips and Tricks ##
+
+## Tipps und Tricks ##
 
 Before we finish this chapter on basic Git, a few little tips and tricks may make your Git experience a bit simpler, easier, or more familiar. Many people use Git without using any of these tips, and we won’t refer to them or assume you’ve used them later in the book; but you should probably know how to do them.
 
+Bevor wir dieses Kapitel über die Git-Basics abschließen, hier noch ein paar kleine Tipps, die dir vielleicht helfen, deine Erfahrungen mit Git ein wenig einfacher und vertrauter zu machen. Viele Leute benutzen Git ohne einen dieser Tipps zu benutzen, und wir werden, später im Buch, nicht auf sie verweisen, oder vorraussetzten, dass sie diese genutzt haben; aber sie sollten vermutlich wissen, wie sie benutzt werden.
+
 ### Auto-Completion ###
 
+### Auto-Vervollständigung ###
+
 If you use the Bash shell, Git comes with a nice auto-completion script you can enable. Download the Git source code, and look in the `contrib/completion` directory; there should be a file called `git-completion.bash`. Copy this file to your home directory, and add this to your `.bashrc` file:
+
+Wenn du die Bash-Shell benutzt, kommt Git mit einem schönen Auto-Vervollständigungs-Script, dass du aktivieren kannst. Lade den Git-Source-Code herunter, und guck im 'contrib/completion'-Verzeichnis; dort sollte eine Datei mit dem Namen 'git-completion.bash' liegen. Kopiere diese Datei in dein Home-Verzeichnis, und füge zu deiner '.bashrc'-Datei folgendes hinzu:
 
 	source ~/.git-completion.bash
 
 If you want to set up Git to automatically have Bash shell completion for all users, copy this script to the `/opt/local/etc/bash_completion.d` directory on Mac systems or to the `/etc/bash_completion.d/` directory on Linux systems. This is a directory of scripts that Bash will automatically load to provide shell completions.
 
+Wenn du Git so aufsetzten willst, dass automatisch jeder Benutzer Auto-Vervollständigung hat, kopiere das Script in das '/opt/local/etc/Bash_completion.d'-Verzeichnis auf Mac-System, oder in das '/etc/bash_completion.d/'-Verzeichnis aud Linux-Systemen. Dies ist ein Verzeichnis für Scripte, die die Bash automatisch laden wird, um Shell-Auto-Vervollständigung zu realisieren.
+
 If you’re using Windows with Git Bash, which is the default when installing Git on Windows with msysGit, auto-completion should be preconfigured.
 
+Wenn du Windows mit Git-Bash benutzt, was Standart ist, wenn man Git auf Windows mit msysGit installiert, sollte Auto-Vervollständigung schon vorkonfiguriert sein.
+
 Press the Tab key when you’re writing a Git command, and it should return a set of suggestions for you to pick from:
+
+Drücke die Tab-Taste, wenn du ein Git-Kommando eintippst, und es sollte eine Auswahl von Möglichkeiten erscheinen, zwischen denen du wählen kannst:
 
 	$ git co<tab><tab>
 	commit config
 
 In this case, typing git co and then pressing the Tab key twice suggests commit and config. Adding `m<tab>` completes `git commit` automatically.
+
+In diesem Fall wird das Eintippen von 'git co', und das drücken der Tab-Taste, die Empfehlungen 'commit' und 'config' aufführen. Wenn sie nun noch ein 'm' hinzufügen, und nochmals die Tab-Taste drücken, sollte der Befehl automatisch zu 'git commit' vervollständigt werden.
 	
 This also works with options, which is probably more useful. For instance, if you’re running a `git log` command and can’t remember one of the options, you can start typing it and press Tab to see what matches:
+
+Dies funktioniert auch mit Optionen, was wahrscheinlich mehr Sinn macht. Wenn du zum Beispiel 'git log' ausführst, dich aber nicht mehr an eine der Optionen erinneren kannst, fang einfach an zu tippen und guck was passt:
 
 	$ git log --s<tab>
 	--shortstat  --since=  --src-prefix=  --stat   --summary
 
 That’s a pretty nice trick and may save you some time and documentation reading.
 
+Das ist ein wirklich guter Trick, der dir vielleicht Zeit und Dokumentation-lesen spart.
+
 ### Git Aliases ###
 
+### Git Aliase ###
+
 Git doesn’t infer your command if you type it in partially. If you don’t want to type the entire text of each of the Git commands, you can easily set up an alias for each command using `git config`. Here are a couple of examples you may want to set up:
+
+Git erschließt nicht deinen Befehl, wenn du ihn nur teilweise eintippen. Wenn du nicht den gesamten Text jedes Kommandos eintippen willst, kannst du, mit Hilfe von 'git config', einfach ein Alias für jedes Kommando erstellen. Hier sind einige Beispiele, die du vielleicht benutzen willst:
 
 	$ git config --global alias.co checkout
 	$ git config --global alias.br branch
@@ -1423,20 +1501,30 @@ Git doesn’t infer your command if you type it in partially. If you don’t wan
 
 This means that, for example, instead of typing `git commit`, you just need to type `git ci`. As you go on using Git, you’ll probably use other commands frequently as well; in this case, don’t hesitate to create new aliases.
 
+Das bedeutet, dass du, anstatt 'git commit' einzutippen, einfach 'git ci' eintippst. Wenn du Git weiter benutzt wirst du wahrscheinlich auch andere Kommandos öfter benutzen; in diesem Fall brauchst du nicht daran zu sparen, neue Aliase anzulegen.
+
 This technique can also be very useful in creating commands that you think should exist. For example, to correct the usability problem you encountered with unstaging a file, you can add your own unstage alias to Git:
+
+Diese Technik kann ebenfalls beim Erstellen von Kommandos, von denen sie denken, sie sollten existieren, sehr nützlich sein. (...)
 
 	$ git config --global alias.unstage 'reset HEAD --'
 
 This makes the following two commands equivalent:
+
+Dies macht die folgende zwei Kommandos equivalent zueinander:
 
 	$ git unstage fileA
 	$ git reset HEAD fileA
 
 This seems a bit clearer. It’s also common to add a `last` command, like this:
 
+Dies ist ein bisschen klarer. Ebenso ist es geläufig, ein 'last'-Kommando wie folgt zu implimentieren:
+
 	$ git config --global alias.last 'log -1 HEAD'
 
 This way, you can see the last commit easily:
+
+So kannst du einfach deinen letzten Commit sehen:
 	
 	$ git last
 	commit 66938dae3329c7aebe598c2246a8e6af90d04646
@@ -1449,8 +1537,12 @@ This way, you can see the last commit easily:
 
 As you can tell, Git simply replaces the new command with whatever you alias it for. However, maybe you want to run an external command, rather than a Git subcommand. In that case, you start the command with a `!` character. This is useful if you write your own tools that work with a Git repository. We can demonstrate by aliasing `git visual` to run `gitk`:
 
+(...)
+
 	$ git config --global alias.visual "!gitk"
 
 ## Summary ##
 
 At this point, you can do all the basic local Git operations — creating or cloning a repository, making changes, staging and committing those changes, and viewing the history of all the changes the repository has been through. Next, we’ll cover Git’s killer feature: its branching model.
+
+An diesem Punkt kannst du alle Basis-Git-Operationen tätigen - Erstellen oder Clonen von Repos, Änderungen machen, Inszenierung/Vorbereitung und Committen dieser Änderungen, und die lokale History all der Änderungen in einem Repo einsehen. Als nächstes werden wir das Killer-Feature von Git behandeln: das Branching-Model.
