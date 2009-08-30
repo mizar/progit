@@ -1050,7 +1050,7 @@ Ich habe in vorangegangenen Kapiteln schon Beispiele dafür gegeben, wie man ein
 
 Now you can use the string pb on the command line in lieu of the whole URL. For example, if you want to fetch all the information that Paul has but that you don’t yet have in your repository, you can run git fetch pb:
 
-Jetzt kannst du 
+Jetzt kannst du "pb" als Abkürzung für den ganzen URL benutzen. Wenn du zum Beispiel alle Informationen die Paul hat, du aber noch nicht in deinem Repository hast, haben willst, kannst du "git fetch pb" benutzen:
 
 	$ git fetch pb
 	remote: Counting objects: 58, done.
@@ -1063,29 +1063,51 @@ Jetzt kannst du
 
 Paul’s master branch is accessible locally as `pb/master` — you can merge it into one of your branches, or you can check out a local branch at that point if you want to inspect it.
 
+Paul's Master Branch ist lokal unter 'pb/master' erreichbar - du kannst ihn in einen deiner Branches mergen, oder du kannst einen lokalen Branch an dem Punkt auschecken, wenn du ihn untersuchen willst.
+
 ### Fetching and Pulling from Your Remotes ###
 
+### Von deinem Host fetchen und pullen ###
+
 As you just saw, to get data from your remote projects, you can run
+
+Wie du gesehen hast kannst du, um Daten von deinem Projekt zu bekommen, folgendes ausführen:
 
 	$ git fetch [remote-name]
 
 The command goes out to that remote project and pulls down all the data from that remote project that you don’t have yet. After you do this, you should have references to all the branches from that remote, which you can merge in or inspect at any time. (We’ll go over what branches are and how to use them in much more detail in Chapter 3.)
 
+Das Kommando geht zu dem entfernten Projekt und zieht sich alle Daten von dem entfernten Projekt, die du noch nicht hast. Nachdem du das getan hast, solltest du Referenzen zu all den Branches von dem Remote Host haben, sodass du sie jeder Zeit aufrufen oder mergen kannst. (In Kapitel 3 werden wir sehr viel mehr im Detail erklären, was Branches sind und wie man sie benutzt).
+
 If you cloned a repository, the command automatically adds that remote repository under the name origin. So, `git fetch origin` fetches any new work that has been pushed to that server since you cloned (or last fetched from) it. It’s important to note that the fetch command pulls the data to your local repository — it doesn’t automatically merge it with any of your work or modify what you’re currently working on. You have to merge it manually into your work when you’re ready.
+
+Wenn du ein Repository geklont hast, wird das Kommando automatisch das Remote Repository, unter dem Namen "origin", hinzufügen. Also zieht 'git fetch origin' alle neue Arbeit, die zum Repository-Server gepusht wurde, seit du es das letzt mal geclont (oder gefetched) hast. Es ist wichtig zu verstehen, dass das 'fetch'-Kommando die Daten in dein Lokales Repository zieht - es merged sie aber nicht automatisch mit irgendeiner lokalen, oder verändert etwas, an dem sie gerade arbeiten. Du musst sie manuell in deine Arbeit mergen, wenn du fertig bist.
 
 If you have a branch set up to track a remote branch (see the next section and Chapter 3 for more information), you can use the `git pull` command to automatically fetch and then merge a remote branch into your current branch. This may be an easier or more comfortable workflow for you; and by default, the `git clone` command automatically sets up your local master branch to track the remote master branch on the server you cloned from (assuming the remote has a master branch). Running `git pull` generally fetches data from the server you originally cloned from and automatically tries to merge it into the code you’re currently working on.
 
+Wenn du einen Branch aufgesetzt hast, um einen entfernten Branch zu tracken (die folgende Sektion und Kapitel 3 geben mehr Informationen), kannst du das 'git pull'-Kommando verwenden, dass automatisch die Daten holt und dann den entfernten Branch in deinen aktuellen merged. Dies ist wahrscheinlich ein einfacherer und komfortablerer Workflow für dich; und standartmäßig erstellt das Kommando 'git clone' einen lokalen Master Branch, der den entfernten Master Branch auf dem Server, von dem er geclont ist (verrausgesetzt dieser hat einen Master Branch), trackt. Der Ausführen von 'git pull' zieht sich normalerweise die Daten von dem Server, von dem sie ursprünglich geclont sind, und versucht automatisch sie in deinen Code, an dem du gerade arbeitest, zu mergen.
+
 ### Pushing to Your Remotes ###
 
+### Zu deinem Server pushen ###
+
 When you have your project at a point that you want to share, you have to push it upstream. The command for this is simple: `git push [remote-name] [branch-name]`. If you want to push your master branch to your `origin` server (again, cloning generally sets up both of those names for you automatically), then you can run this to push your work back up to the server:
+
+Wenn dein Projekt an einem Punkt angekommen ist, an dem du es mit anderen teilen willst, musst du es hochladen. Das Kommando dafür ist einfach: 'git push [remote-name] [branch-name]'. Wenn du deinen Master Branch zu deinem 'origin' Server (nochmal: wenn du clonst werden diese beiden Namen automatisch vergeben) hochladen willst, kannst du folgendes ausführen:
 
 	$ git push origin master
 
 This command works only if you cloned from a server to which you have write access and if nobody has pushed in the meantime. If you and someone else clone at the same time and they push upstream and then you push upstream, your push will rightly be rejected. You’ll have to pull down their work first and incorporate it into yours before you’ll be allowed to push. See Chapter 3 for more detailed information on how to push to remote servers.
 
+Dieses Kommando funktioniert nur, wenn du von einem Server geclont hast, auf dem du Schreib-Zugriff hast, und niemand in der Zwischenzeit bereits gepusht hat. Wenn du und jemand anderes zur selben Zeit geclont habt (gleicher Zustand des Repos), und er pusht vor dir, wird dein Push zurückgewiesen. Du müsstest dann zuerst seine Arbeit wieder pullen und in deine einbinden, bevor du pushen darfst. Kapitel 3 gibt dir mehr Informationen über das Pushen zu entfernten Servern.
+
 ### Inspecting a Remote ###
 
+### Einen Server untersuchen ###
+
 If you want to see more information about a particular remote, you can use the `git remote show [remote-name]` command. If you run this command with a particular shortname, such as `origin`, you get something like this:
+
+Wenn du mehr Informationen über einen bestimmten Server haben willst, kannst du 'git remote show [remote-name]' benutzen. Wenn du dieses Kommando mit einem bestimmten Kurznamen, wie 'origin', aufrufst, wirst du so etwas in der Art bekommen:
 
 	$ git remote show origin
 	* remote origin
@@ -1098,7 +1120,11 @@ If you want to see more information about a particular remote, you can use the `
 
 It lists the URL for the remote repository as well as the tracking branch information. The command helpfully tells you that if you’re on the master branch and you run `git pull`, it will automatically merge in the master branch on the remote after it fetches all the remote references. It also lists all the remote references it has pulled down.
 
+(...)
+
 That is a simple example you’re likely to encounter. When you’re using Git more heavily, however, you may see much more information from `git remote show`:
+
+Das ist ein einfaches Beispiel, dass sie wahrscheinlich (noch öfter) antreffen werden. Wenn du Git intensiver nutzt, wie auch immer, wirst du wahrscheinlich sehr viel mehr Informationen von 'git remote show' bekommen:
 
 	$ git remote show origin
 	* remote origin
@@ -1124,9 +1150,15 @@ That is a simple example you’re likely to encounter. When you’re using Git m
 
 This command shows which branch is automatically pushed when you run `git push` on certain branches. It also shows you which remote branches on the server you don’t yet have, which remote branches you have that have been removed from the server, and multiple branches that are automatically merged when you run `git pull`.
 
+Dieses Kommando zeigt, welcher Branch automatisch gepusht wird, wenn du 'git push' auf einem Branch aufrufst. Ausserdem zeigt es dir, welche Branches auf dem Server du noch nicht lokal hast, welche Branches du hast, die vom Server gelöscht wurden, und mehrere Branches, die automatisch gemerged werden, wenn du 'git pull' aufrufst.
+
 ### Removing and Renaming Remotes ###
 
+### Löschen und Umbenennen von Servern (Verbindungen) ###
+
 If you want to rename a reference, in newer versions of Git you can run `git remote rename` to change a remote’s shortname. For instance, if you want to rename `pb` to `paul`, you can do so with `git remote rename`:
+
+Wenn du eine Referenz umbenennen willst, kannst du (in neueren Git-Versionen) 'git remote rename' verwenden, um den Kurznamen des Servers zu ändern. Wenn du zum Beispiel "pb" in "paul" umbenennen möchtest, gehst du folgendermaßen vor: 
 
 	$ git remote rename pb paul
 	$ git remote
@@ -1135,7 +1167,11 @@ If you want to rename a reference, in newer versions of Git you can run `git rem
 
 It’s worth mentioning that this changes your remote branch names, too. What used to be referenced at `pb/master` is now at `paul/master`.
 
-If you want to remove a reference for some reason — you’ve moved the server or are no longer using a particular mirror, or perhaps a contributor isn’t contributing anymore — you can use `git remote rm`:
+Denke nicht, dass dies auch auch die Namen der entfernten Branches ändert. Was vorher unter "pb/master" zu finden war ist nun unter "paul/master" zu finden.
+
+If you want to remove a reference for some reason — you’ve moved the server or are no longer using a particular mirror, or perhaps a contributor isn’t contributing anymore — you can use `git remote rm [remote name]`:
+
+Wenn du eine Server-Referenz, warum auch immer, löschen willst - dein Server ist umgezogen, du bist ist nicht länger auf dem Mirror, oder vielleicht hat ein Entwickler aufgehört sich am Projekt zu beteiligen - kannst du 'git remote rm [remote name]' benutzen:
 
 	$ git remote rm paul
 	$ git remote
@@ -1144,6 +1180,8 @@ If you want to remove a reference for some reason — you’ve moved the server 
 ## Tagging ##
 
 Like most VCSs, Git has the ability to tag specific points in history as being important. Generally, people use this functionality to mark release points (v1.0, and so on). In this section, you’ll learn how to list the available tags, how to create new tags, and what the different types of tags are.
+
+Wie die meisten Versions-Kontroll-Systeme hat auch Git die Fähigkeit, spezielle Punkte, in der Geschichte des Repos, als wichtig zu markieren/taggen. Normalerweise nutzen die Leute diese Funktion, um Release-Points (v1.0, und so weiter) zu markieren. In dieser Sektion wirst du lernen, wie eine Liste der verfügbaren Tags, wie man neue erstellt, und was es für verschiedene Tag-Typen gibt.
 
 ### Listing Your Tags ###
 
