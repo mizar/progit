@@ -119,15 +119,15 @@ Git ディレクトリとは, Git がどこにプロジェクト用のメタデ�
 
 ファイルの特定のバージョンが Git ディレクトリにあるなら, コミットされたと考えられます. それが編集されているがステージ・エリアに追加されているなら, ステージされています. そしてそれがチェックアウトされステージされていない状態から変更されたなら, 編集されています. 第2章で, これら状態についてより多く学ぶでしょう. そしてそれらをどのように利用するかどのようにステージ部分を全て省略するか学ぶでしょう.
 
-## Installing Git ##
+## Git のインストール ##
 
-Let’s get into using some Git. First things first—you have to install it. You can get it a number of ways; the two major ones are to install it from source or to install an existing package for your platform.
+Git 使用に乗り込みましょう. 真っ先にやるべきは最も重要な事です. Git をインストールする必要があります. 複数の方法から1つ選ぶことが出来ます. 主流の2つはソースからインストールするかプラットフォーム向け既存パッケージをインストールするかです.
 
-### Installing from Source ###
+### ソースからインストール ###
 
-If you can, it’s generally useful to install Git from source, because you’ll get the most recent version. Each version of Git tends to include useful UI enhancements, so getting the latest version is often the best route if you feel comfortable compiling software from source. It is also the case that many Linux distributions contain very old packages; so unless you’re on a very up-to-date distro or are using backports, installing from source may be the best bet.
+出来れば, ソースから Git をインストールするのが通常は便利です. 何故なら最も最近のバージョンを入手するでしょうから. Git の各バージョンは便利な UI 付加を内包する傾向にあります. ですから最新バージョンを入手するのはソースからソフトウェアをコンパイルするのが気楽なら大抵最良の道筋です. 多くの Linux ディストリビューションはとても古いパッケージを内包している場合もあります. ですから更新頻度の高いディストリビューションかバックポートを使用しない限り, ソースからインストールするのが最良策かも知れません.
 
-To install Git, you need to have the following libraries that Git depends on: curl, zlib, openssl, expat, and libiconv. For example, if you’re on a system that has yum (such as Fedora) or apt-get (such as a Debian based system), you can use one of these commands to install all of the dependencies:
+Git をインストールするため, 次に挙げる依存ライブラリが必要です: curl, zlib, openssl, expat, libiconv. 例えば, yum (Fedora 等) や apt-get (Debian 系システム) を使用しているなら, 全依存関係をインストールするのにこれらコマンドの1つを使えます:
 
 	$ yum install curl-devel expat-devel gettext-devel \
 	  openssl-devel zlib-devel
@@ -135,28 +135,28 @@ To install Git, you need to have the following libraries that Git depends on: cu
 	$ apt-get install curl-devel expat-devel gettext-devel \
 	  openssl-devel zlib-devel
 	
-When you have all the necessary dependencies, you can go ahead and grab the latest snapshot from the Git web site:
+全ての必要依存関係を入手した時, 続けて最新スナップショットを Git の Web サイトから取ってくることが出来ます:
 
 	http://git-scm.com/download
 	
-Then, compile and install:
+そして, コンパイルしてインストールします:
 
 	$ tar -zxf git-1.6.0.5.tar.gz
 	$ cd git-1.6.0.5
 	$ make prefix=/usr/local all
 	$ sudo make prefix=/usr/local install
 
-After this is done, you can also get Git via Git itself for updates:
+これが終わったら, Git 自身を介してアップデートを入手することも出来ます:
 
 	$ git clone git://git.kernel.org/pub/scm/git/git.git
 	
-### Installing on Linux ###
+### Linux 上のインストール ###
 
-If you want to install Git on Linux via a binary installer, you can generally do so through the basic package-management tool that comes with your distribution. If you’re on Fedora, you can use yum:
+Linux 上でバイナリインストーラを介して Git をインストールしたいなら, ディストリビューション付属の基本的なパッケージ管理ツールで通常出来ます. Fedora 上なら, yum を使えます:
 
 	$ yum install git-core
 
-Or if you’re on a Debian-based distribution like Ubuntu, try apt-get:
+もしくは Ubuntu のような Debian 系ディストリビューション上なら, apt-get を試して下さい:
 
 	$ apt-get install git-core
 
