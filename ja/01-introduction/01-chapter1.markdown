@@ -92,33 +92,32 @@ Git の中ではこのようなハッシュをいたるところで目にする�
 
 ### Git は通常データだけを追加します ###
 
-Git でアクションを起こすとき, ほとんど全てのアクションは Git データベースにデータ追加だけを行います.
-When you do actions in Git, nearly all of them only add data to the Git database. It is very difficult to get the system to do anything that is not undoable or to make it erase data in any way. As in any VCS, you can lose or mess up changes you haven’t committed yet; but after you commit a snapshot into Git, it is very difficult to lose, especially if you regularly push your database to another repository.
+Git で行動するとき, それらのほとんど全ては Git データベースへデータを追加するだけです. する事全部を元に戻せないかどんな方法でもデータを消去するシステムを手に入れるのはとても大変です. 何故ならどんな VCS でも, まだコミットしていない変更を失ったり台無しにするかも知れないのです. しかし Git にスナップショットをコミットした後では, 失うのは非常に難しく, 特に定期的にデータベースを他のリポジトリにプッシュしている場合は尚更です.
 
-This makes using Git a joy because we know we can experiment without the danger of severely screwing things up. For a more in-depth look at how Git stores its data and how you can recover data that seems lost, see “Under the Covers” in Chapter 9.
+事を深刻なまでに台無しにする危険抜きで実験できるのを知っているので, これは Git の使用を喜びに変えてくれます. Git がどのように自信のデータを格納し失われたかに見えるデータを復旧するかのより多くの熟慮された観点は, 第9章の“Under the Covers”をご覧下さい.
 
-### The Three States ###
+### 3つの状態 ###
 
-Now, pay attention. This is the main thing to remember about Git if you want the rest of your learning process to go smoothly. Git has three main states that your files can reside in: committed, modified, and staged. Committed means that the data is safely stored in your local database. Modified means that you have changed the file but have not committed it to your database yet. Staged means that you have marked a modified file in its current version to go into your next commit snapshot.
+今, 注目して下さい. 残りの学習過程をすらすらと行きたいならこれは Git について覚える主なことです. Git はファイルが属せる主な3つの状態があります. コミット, 修正, ステージです. コミットは, データは安全にローカルデータベースに格納されたという意味です. 修正は, ファイルを変更したがまだデータベースにコミットされていないという意味です. ステージは, 次のコミット・スナップショットへ行く現在のバージョンの修正ファイルに印を付けるという意味です.
 
-This leads us to the three main sections of a Git project: the Git directory, the working directory, and the staging area.
+これは Git プロジェクトの3主部門へ導きます. Git ディレクトリ, ワーク・ディレクトリ, ステージ・エリアです.
 
 Insert 18333fig0106.png 
-Figure 1-6. Working directory, staging area, and git directory
+図 1-6. ワーク・ディレクトリ, ステージ・エリア, Git ディレクトリ
 
-The Git directory is where Git stores the metadata and object database for your project. This is the most important part of Git, and it is what is copied when you clone a repository from another computer.
+Git ディレクトリとは, Git がどこにプロジェクト用のメタデータとオブジェクトデータベースを格納するかです. これは Git の最も重要な部分で, 別のコンピュータからリポジトリをクローンした時何がコピーされるかです.
 
-The working directory is a single checkout of one version of the project. These files are pulled out of the compressed database in the Git directory and placed on disk for you to use or modify.
+ワーク・ディレクトリとは, プロジェクト内のあるバージョンの単一チェックアウトです. これらファイルは Git ディレクトリの圧縮データベースから除かれて使用・編集のためディスク上に置かれたものです.
 
-The staging area is a simple file, generally contained in your Git directory, that stores information about what will go into your next commit. It’s sometimes referred to as the index, but it’s becoming standard to refer to it as the staging area.
+ステージ・エリアとは, 単純なファイルで, 通常 Git ディレクトリに格納されており, それは次のコミットに何が来るかについて情報を持っています. それは時々インデックスとして参照されますが, それをステージ・エリアとして参照するのが標準となってきています.
 
-The basic Git workflow goes something like this:
+基本 Git ワークフローはこのようになります:
 
-1.	You modify files in your working directory.
-2.	You stage the files, adding snapshots of them to your staging area.
-3.	You do a commit, which takes the files as they are in the staging area and stores that snapshot permanently to your Git directory.
+1. ワーク・ディレクトリのファイルを編集します.
+2． ファイルをステージして, そのスナップショットをステージ・エリアに追加します.
+3. コミットして, それはファイルをステージ・エリア内のものとして取り, Git ディレクトリへ恒久的にスナップショットを格納します. 
 
-If a particular version of a file is in the git directory, it’s considered committed. If it’s modified but has been added to the staging area, it is staged. And if it was changed since it was checked out but has not been staged, it is modified. In Chapter 2, you’ll learn more about these states and how you can either take advantage of them or skip the staged part entirely.
+ファイルの特定のバージョンが Git ディレクトリにあるなら, コミットされたと考えられます. それが編集されているがステージ・エリアに追加されているなら, ステージされています. そしてそれがチェックアウトされステージされていない状態から変更されたなら, 編集されています. 第2章で, これら状態についてより多く学ぶでしょう. そしてそれらをどのように利用するかどのようにステージ部分を全て省略するか学ぶでしょう.
 
 ## Installing Git ##
 
