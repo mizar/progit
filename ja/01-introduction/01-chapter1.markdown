@@ -160,67 +160,67 @@ Linux 上でバイナリインストーラを介して Git をインストール
 
 	$ apt-get install git-core
 
-### Installing on Mac ###
+### Mac 上のインストール ###
 
-There are two easy ways to install Git on a Mac. The easiest is to use the graphical Git installer, which you can download from the Google Code page (see Figure 1-7):
+Mac 上で Git をインストールする2つの簡単な方法があります. 最も簡単なのはグラフィカル Git インストーラです. これは Google Code ページからダウンロード出来ます(図1-7参照):
 
 	http://code.google.com/p/git-osx-installer
 
 Insert 18333fig0107.png 
-Figure 1-7. Git OS X installer
+図1-7. Git OS X インストーラ
 
-The other major way is to install Git via MacPorts (`http://www.macports.org`). If you have MacPorts installed, install Git via
+その他主要な方法は MacPorts (`http://www.macports.org`) を介してインストールする事です.
 
 	$ sudo port install git-core +svn +doc +bash_completion +gitweb
 
-You don’t have to add all the extras, but you’ll probably want to include +svn in case you ever have to use Git with Subversion repositories (see Chapter 8).
+余分なもの全てを追加する必要はありません. しかしおそらく +svn はいつか Subversion リポジトリで Git を使用する必要に備えて追加したいでしょう(8章参照).
 
-### Installing on Windows ###
+### Windows 上のインストール ###
 
-Installing Git on Windows is very easy. The msysGit project has one of the easier installation procedures. Simply download the installer exe file from the Google Code page, and run it:
+Windows 上の Git インストールはとても簡単です. msysGit プロジェクトはより簡単なインストール方法の1つです. 単に exe ファイルインストーラを Google Code ページよりダウンロードして, 走らせるだけです:
 
 	http://code.google.com/p/msysgit
 
-After it’s installed, you have both a command-line version (including an SSH client that will come in handy later) and the standard GUI.
+インストールされた後, コマンドラインバージョン(後々何かと便利な SSH クライアントを含んでいます)と標準 GUI の両方があります.
 
-## First-Time Git Setup ##
+## Git の初期設定 ##
 
-Now that you have Git on your system, you’ll want to do a few things to customize your Git environment. You should have to do these things only once; they’ll stick around between upgrades. You can also change them at any time by running through the commands again.
+システム上に Git がある今, 幾らか Git 環境をカスタマイズしたいでしょう. これらの事は1度だけに留めるべきです. それらはアップグレード間をついて回ります. またいつでもコマンド実行する事でそれらを再度変更できます.
 
-Git comes with a tool called git config that lets you get and set configuration variables that control all aspects of how Git looks and operates. These variables can be stored in three different places:
+Git は git config というツールが付属しており, これは Git がどのように見え作用するするかの全局面を管理する構成値の取得と設定をします. これら構成値は3つの異なる場所に格納される可能性があります:
 
-*	`/etc/gitconfig` file: Contains values for every user on the system and all their repositories. If you pass the option` --system` to `git config`, it reads and writes from this file specifically. 
-*	`~/.gitconfig` file: Specific to your user. You can make Git read and write to this file specifically by passing the `--global` option. 
-*	config file in the git directory (that is, `.git/config`) of whatever repository you’re currently using: Specific to that single repository. Each level overrides values in the previous level, so values in `.git/config` trump those in `/etc/gitconfig`.
+*	`/etc/gitconfig` ファイル: システム上の全ユーザとそれら全てのリポジトリの値を格納します. 具体的には, オプション ` --system` を `git config` に渡せば, このファイルから読み書きします.
+*	`~/.gitconfig` ファイル: ユーザを特定します. `--global` オプションを渡す事で Git にこのファイルに特定して読み書きさせることができます.
+*	現在作業中のリポジトリ内 git ディレクトリの config ファイル(つまり `.git/config`): 単一リポジトリを特定します. 各レベルがその前のレベル値を上書きします. つまり `.git/config` の値は `/etc/gitconfig` 内の値に勝ります.
 
-On Windows systems, Git looks for the `.gitconfig` file in the `$HOME` directory (`C:\Documents and Settings\$USER` for most people). It also still looks for /etc/gitconfig, although it’s relative to the MSys root, which is wherever you decide to install Git on your Windows system when you run the installer.
+Windows システム上で, Git は `$HOME` ディレクトリ内の `.gitconfig` ファイル(多くの場合は `C:\Documents and Settings\$USER`) を探します. また Msys ルートに関係のある /etc/config も探します. これはインストーラを実行するときに Windows 上のどこでも指定したインストール先です.
 
-### Your Identity ###
+### あなたの ID ###
 
-The first thing you should do when you install Git is to set your user name and e-mail address. This is important because every Git commit uses this information, and it’s immutably baked into the commits you pass around:
+Git をインストールしたら最初にすべきはユーザ名とEメールアドレスの設定です. これは重要です. 何故なら毎回 Git コミットはこの情報を使い, 以下のように渡したコミットに不変的に焼き付けるからです:
 
 	$ git config --global user.name "John Doe"
 	$ git config --global user.email johndoe@example.com
 
-Again, you need to do this only once if you pass the `--global` option, because then Git will always use that information for anything you do on that system. If you want to override this with a different name or e-mail address for specific projects, you can run the command without the `--global` option when you’re in that project.
+もう1度, `--global` オプションを渡すなら1度きりにする必要があります. 何故なら Git は毎回その情報をそのシステム上でする全ての事に使うからです. 異なる名前やEメールアドレスを特定のプロジェクト用に上書きしたいなら, プロジェクト内にいる時 `--global` オプション抜きでコマンドを実行することが出来ます.
 
-### Your Editor ###
+### あなたのエディタ ###
 
-Now that your identity is set up, you can configure the default text editor that will be used when Git needs you to type in a message. By default, Git uses your system’s default editor, which is generally Vi or Vim. If you want to use a different text editor, such as Emacs, you can do the following:
+あなたの ID が設定された今, Git がメッセージを入力してほしい時に使用される標準のテキストエディタを設定できます. 標準では, Git はシステムの標準エディタを使用します. これは通常 Vi か Vim です. 異なるテキストエディタとして Emacs などを使いたいなら, 以下の通り出来ます:
 
 	$ git config --global core.editor emacs
 	
-### Your Diff Tool ###
+### あなたの Diff ツール ###
 
-Another useful option you may want to configure is the default diff tool to use to resolve merge conflicts. Say you want to use vimdiff:
+もう１つ便利なオプションで設定したい可能性があるのが merge 衝突の解決に使用する標準の Diff ツールです. vimdiff を使いたいなら:
 
 	$ git config --global merge.tool vimdiff
 
-Git accepts kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge, and opendiff as valid merge tools. You can also set up a custom tool; see Chapter 7 for more information about doing that.
+Git は kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge, そして opendiff を有効な merge ツールとして受け入れます. またカスタムツールも設定できます. それをするより多くの情報のため第7章をご覧ください.
 
-### Checking Your Settings ###
+### 設定の確認 ###
 
-If you want to check your settings, you can use the `git config --list` command to list all the settings Git can find at that point:
+設定を確認したいなら, その時点で Git が発見できる全設定をリスト化する `git config --list` コマンドを使えます:
 
 	$ git config --list
 	user.name=Scott Chacon
@@ -231,28 +231,28 @@ If you want to check your settings, you can use the `git config --list` command 
 	color.diff=auto
 	...
 
-You may see keys more than once, because Git reads the same key from different files (`/etc/gitconfig` and `~/.gitconfig`, for example). In this case, Git uses the last value for each unique key it sees.
+1つの設定事項に対して1度以上参照することがあります. 何故なら Git は 設定事項1つにつき複数のファイル(例えば `/etc/gitconfig` と `~/.gitconfig` 等)を読むからです. 上記の場合, Git は各々の設定事項が参照する最後の値を使用しています.
 
-You can also check what Git thinks a specific key’s value is by typing `git config {key}`:
+また Git が特定の設定事項の値が何であるか `git config {設定事項}` と入力することで確認できます:
 
 	$ git config user.name
 	Scott Chacon
 
-## Getting Help ##
+## ヘルプの参照 ##
 
-If you ever need help while using Git, there are three ways to get the manual page (manpage) help for any of the Git commands:
+Git 使用中にヘルプが必要になった事があるなら, 全 Git コマンドのマニュアルページ (manpage) ヘルプを得る3つの方法があります:
 
 	$ git help <verb>
 	$ git <verb> --help
 	$ man git-<verb>
 
-For example, you can get the manpage help for the config command by running
+例えば, config コマンドの manpage ヘルプを得るには以下を実行します:
 
 	$ git help config
 
-These commands are nice because you can access them anywhere, even offline.
-If the manpages and this book aren’t enough and you need in-person help, you can try the `#git` or `#github` channel on the Freenode IRC server (irc.freenode.net). These channels are regularly filled with hundreds of people who are all very knowledgeable about Git and are often willing to help.
+これらコマンドは親切です. 何故ならどこからでも, オフラインでさえもアクセス出来ます.
+manpage やこの本が充分でなく人の助けが必要なら, Freenode IRC (irc.freenode.net) の `#git` や `#github` チャンネルを試してみることも可能です. これらチャンネルはたびたび Git に精通し大抵手助けの意志のある数百の人々で埋め尽くされます.
 
-## Summary ##
+## まとめ ##
 
-You should have a basic understanding of what Git is and how it’s different from the CVCS you may have been using. You should also now have a working version of Git on your system that’s set up with your personal identity. It’s now time to learn some Git basics.
+Git とは何かそして今まで使ってきたかも知れない CVCS とどう違うのかの基本的な理解をしたはずです. またあなた個人の ID を設定した Git が今システム上で動いているはずです. 今から Git 基礎学習の時間です.
