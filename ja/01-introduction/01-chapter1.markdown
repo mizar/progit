@@ -16,7 +16,7 @@
 この問題を解決するためプログラマーたちはローカルVCSを開発しました。当時のそれはファイルへの変更全てをリビジョン管理下に置く単純なデータベースによるものでした(図1-1)。
 
 Insert 18333fig0101.png 
-図1-1. ローカル・バージョン管理の図
+図1-1. ローカル・バージョン管理図
 
 もっとも有名なVCSツールの一つにRCSと呼ばれるシステムがありました。これは今日でも多くのコンピュータと共に配布されています。人気のMac OS Xでさえも、開発ツールをインストールするとRCSコマンドが含まれています。このツールは基本的に、変更から変更を特別なディスク・フォーマットのパッチ・セット(これはファイルとは異なります)に記録して動きます. これはパッチに追加された全ての時点のファイルを再生成することができます.
 
@@ -26,7 +26,7 @@ Insert 18333fig0101.png
 複数のクライアントがサーバからファイルをチェックアウトします。この手法は長年バージョン管理のスタンダードでした(図1-2)。
 
 Insert 18333fig0102.png 
-図1-2. 集中型バージョン管理の図
+図1-2. 集中型バージョン管理図
 
 CVCSにはローカルVCS以上に多くの利点があります。例えば、プロジェクトに所属しているほかの人が何をしているのか誰でもある程度正確に把握できます。また管理者の立場からは、各クライアントごとのローカルデータベースを処理するよりCVCSで管理する方がはるかに容易で、それぞれの権限を肌理細やかに管理することができます。
 
@@ -91,44 +91,44 @@ Git の用いるこのチェックサム・メカニズムは SHA-1 ハッシュ
 
 Git の中ではこのようなハッシュをいたるところで目にするでしょう. 実際, Git は全てをファイル名でなく, ファイルの内容をハッシュ値でデータベースに記録します.
 
-### Git Generally Only Adds Data ###
+### Git は通常データだけを追加します ###
 
-When you do actions in Git, nearly all of them only add data to the Git database. It is very difficult to get the system to do anything that is not undoable or to make it erase data in any way. As in any VCS, you can lose or mess up changes you haven’t committed yet; but after you commit a snapshot into Git, it is very difficult to lose, especially if you regularly push your database to another repository.
+Git で行動するとき, それらのほとんど全ては Git データベースへデータを追加するだけです. する事全部を元に戻せないかどんな方法でもデータを消去するシステムを手に入れるのはとても大変です. 何故ならどんな VCS でも, まだコミットしていない変更を失ったり台無しにするかも知れないのです. しかし Git にスナップショットをコミットした後では, 失うのは非常に難しく, 特に定期的にデータベースを他のリポジトリにプッシュしている場合は尚更です.
 
-This makes using Git a joy because we know we can experiment without the danger of severely screwing things up. For a more in-depth look at how Git stores its data and how you can recover data that seems lost, see “Under the Covers” in Chapter 9.
+事を深刻なまでに台無しにする危険抜きで実験できるのを知っているので, これは Git の使用を喜びに変えてくれます. Git がどのように自身のデータを格納し失われたかに見えるデータを復旧するかのより多くの熟慮された観点は, 第9章の“Under the Covers”をご覧下さい.
 
-### The Three States ###
+### 3つの状態 ###
 
-Now, pay attention. This is the main thing to remember about Git if you want the rest of your learning process to go smoothly. Git has three main states that your files can reside in: committed, modified, and staged. Committed means that the data is safely stored in your local database. Modified means that you have changed the file but have not committed it to your database yet. Staged means that you have marked a modified file in its current version to go into your next commit snapshot.
+今, 注目して下さい. 残りの学習過程をすらすらと行きたいならこれは Git について覚える主なことです. Git はファイルが属せる主な3つの状態があります. コミット, 修正, ステージです. コミットは, データは安全にローカルデータベースに格納されたという意味です. 修正は, ファイルを変更したがまだデータベースにコミットされていないという意味です. ステージは, 次のコミット・スナップショットへ行く現在のバージョンの修正ファイルに印を付けるという意味です.
 
-This leads us to the three main sections of a Git project: the Git directory, the working directory, and the staging area.
+これは Git プロジェクトの3主部門へ導きます. Git ディレクトリ, ワーク・ディレクトリ, ステージ・エリアです.
 
 Insert 18333fig0106.png 
-Figure 1-6. Working directory, staging area, and git directory
+図 1-6. ワーク・ディレクトリ, ステージ・エリア, Git ディレクトリ
 
-The Git directory is where Git stores the metadata and object database for your project. This is the most important part of Git, and it is what is copied when you clone a repository from another computer.
+Git ディレクトリとは, Git がどこにプロジェクト用のメタデータとオブジェクトデータベースを格納するかです. これは Git の最も重要な部分で, 別のコンピュータからリポジトリをクローンした時何がコピーされるかです.
 
-The working directory is a single checkout of one version of the project. These files are pulled out of the compressed database in the Git directory and placed on disk for you to use or modify.
+ワーク・ディレクトリとは, プロジェクト内のあるバージョンの単一チェックアウトです. これらファイルは Git ディレクトリの圧縮データベースから除かれて使用・編集のためディスク上に置かれたものです.
 
-The staging area is a simple file, generally contained in your Git directory, that stores information about what will go into your next commit. It’s sometimes referred to as the index, but it’s becoming standard to refer to it as the staging area.
+ステージ・エリアとは, 単純なファイルで, 通常 Git ディレクトリに格納されており, それは次のコミットに何が来るかについて情報を持っています. それは時々インデックスとして参照されますが, それをステージ・エリアとして参照するのが標準となってきています.
 
-The basic Git workflow goes something like this:
+基本 Git ワークフローはこのようになります:
 
-1.	You modify files in your working directory.
-2.	You stage the files, adding snapshots of them to your staging area.
-3.	You do a commit, which takes the files as they are in the staging area and stores that snapshot permanently to your Git directory.
+1. ワーク・ディレクトリのファイルを編集します.
+2． ファイルをステージして, そのスナップショットをステージ・エリアに追加します.
+3. コミットして, それはファイルをステージ・エリア内のものとして取り, Git ディレクトリへ恒久的にスナップショットを格納します. 
 
-If a particular version of a file is in the git directory, it’s considered committed. If it’s modified but has been added to the staging area, it is staged. And if it was changed since it was checked out but has not been staged, it is modified. In Chapter 2, you’ll learn more about these states and how you can either take advantage of them or skip the staged part entirely.
+ファイルの特定のバージョンが Git ディレクトリにあるなら, コミットされたと考えられます. それが編集されているがステージ・エリアに追加されているなら, ステージされています. そしてそれがチェックアウトされステージされていない状態から変更されたなら, 編集されています. 第2章で, これら状態についてより多く学ぶでしょう. そしてそれらをどのように利用するかどのようにステージ部分を全て省略するか学ぶでしょう.
 
-## Installing Git ##
+## Git のインストール ##
 
-Let’s get into using some Git. First things first—you have to install it. You can get it a number of ways; the two major ones are to install it from source or to install an existing package for your platform.
+Git 使用に乗り込みましょう. 真っ先にやるべきは最も重要な事です. Git をインストールする必要があります. 複数の方法から1つ選ぶことが出来ます. 主流の2つはソースからインストールするかプラットフォーム向け既存パッケージをインストールするかです.
 
-### Installing from Source ###
+### ソースからインストール ###
 
-If you can, it’s generally useful to install Git from source, because you’ll get the most recent version. Each version of Git tends to include useful UI enhancements, so getting the latest version is often the best route if you feel comfortable compiling software from source. It is also the case that many Linux distributions contain very old packages; so unless you’re on a very up-to-date distro or are using backports, installing from source may be the best bet.
+出来れば, ソースから Git をインストールするのが通常は便利です. 何故なら最も最近のバージョンを入手するでしょうから. Git の各バージョンは便利な UI 付加を内包する傾向にあります. ですから最新バージョンを入手するのはソースからソフトウェアをコンパイルするのが気楽なら大抵最良の道筋です. 多くの Linux ディストリビューションはとても古いパッケージを内包している場合もあります. ですから更新頻度の高いディストリビューションかバックポートを使用しない限り, ソースからインストールするのが最良策かも知れません.
 
-To install Git, you need to have the following libraries that Git depends on: curl, zlib, openssl, expat, and libiconv. For example, if you’re on a system that has yum (such as Fedora) or apt-get (such as a Debian based system), you can use one of these commands to install all of the dependencies:
+Git をインストールするため, 次に挙げる依存ライブラリが必要です: curl, zlib, openssl, expat, libiconv. 例えば, yum (Fedora 等) や apt-get (Debian 系システム) を使用しているなら, 全依存関係をインストールするのにこれらコマンドの1つを使えます:
 
 	$ yum install curl-devel expat-devel gettext-devel \
 	  openssl-devel zlib-devel
@@ -136,92 +136,92 @@ To install Git, you need to have the following libraries that Git depends on: cu
 	$ apt-get install curl-devel expat-devel gettext-devel \
 	  openssl-devel zlib-devel
 	
-When you have all the necessary dependencies, you can go ahead and grab the latest snapshot from the Git web site:
+全ての必要依存関係を入手した時, 続けて最新スナップショットを Git の Web サイトから取ってくることが出来ます:
 
 	http://git-scm.com/download
 	
-Then, compile and install:
+そして, コンパイルしてインストールします:
 
 	$ tar -zxf git-1.6.0.5.tar.gz
 	$ cd git-1.6.0.5
 	$ make prefix=/usr/local all
 	$ sudo make prefix=/usr/local install
 
-After this is done, you can also get Git via Git itself for updates:
+これが終わったら, Git 自身を介してアップデートを入手することも出来ます:
 
 	$ git clone git://git.kernel.org/pub/scm/git/git.git
 	
-### Installing on Linux ###
+### Linux 上のインストール ###
 
-If you want to install Git on Linux via a binary installer, you can generally do so through the basic package-management tool that comes with your distribution. If you’re on Fedora, you can use yum:
+Linux 上でバイナリインストーラを介して Git をインストールしたいなら, ディストリビューション付属の基本的なパッケージ管理ツールで通常出来ます. Fedora 上なら, yum を使えます:
 
 	$ yum install git-core
 
-Or if you’re on a Debian-based distribution like Ubuntu, try apt-get:
+もしくは Ubuntu のような Debian 系ディストリビューション上なら, apt-get を試して下さい:
 
 	$ apt-get install git-core
 
-### Installing on Mac ###
+### Mac 上のインストール ###
 
-There are two easy ways to install Git on a Mac. The easiest is to use the graphical Git installer, which you can download from the Google Code page (see Figure 1-7):
+Mac 上で Git をインストールする2つの簡単な方法があります. 最も簡単なのはグラフィカル Git インストーラです. これは Google Code ページからダウンロード出来ます(図1-7参照):
 
 	http://code.google.com/p/git-osx-installer
 
 Insert 18333fig0107.png 
-Figure 1-7. Git OS X installer
+図1-7. Git OS X インストーラ
 
-The other major way is to install Git via MacPorts (`http://www.macports.org`). If you have MacPorts installed, install Git via
+その他主要な方法は MacPorts (`http://www.macports.org`) を介してインストールする事です.
 
 	$ sudo port install git-core +svn +doc +bash_completion +gitweb
 
-You don’t have to add all the extras, but you’ll probably want to include +svn in case you ever have to use Git with Subversion repositories (see Chapter 8).
+余分なもの全てを追加する必要はありません. しかしおそらく +svn はいつか Subversion リポジトリで Git を使用する必要に備えて追加したいでしょう(8章参照).
 
-### Installing on Windows ###
+### Windows 上のインストール ###
 
-Installing Git on Windows is very easy. The msysGit project has one of the easier installation procedures. Simply download the installer exe file from the Google Code page, and run it:
+Windows 上の Git インストールはとても簡単です. msysGit プロジェクトはより簡単なインストール方法の1つです. 単に exe ファイルインストーラを Google Code ページよりダウンロードして, 走らせるだけです:
 
 	http://code.google.com/p/msysgit
 
-After it’s installed, you have both a command-line version (including an SSH client that will come in handy later) and the standard GUI.
+インストールされた後, コマンドラインバージョン(後々何かと便利な SSH クライアントを含んでいます)と標準 GUI の両方があります.
 
-## First-Time Git Setup ##
+## Git の初期設定 ##
 
-Now that you have Git on your system, you’ll want to do a few things to customize your Git environment. You should have to do these things only once; they’ll stick around between upgrades. You can also change them at any time by running through the commands again.
+システム上に Git がある今, 幾らか Git 環境をカスタマイズしたいでしょう. これらの事は1度だけに留めるべきです. それらはアップグレード間をついて回ります. またいつでもコマンド実行する事でそれらを再度変更できます.
 
-Git comes with a tool called git config that lets you get and set configuration variables that control all aspects of how Git looks and operates. These variables can be stored in three different places:
+Git は git config というツールが付属しており, これは Git がどのように見え作用するするかの全局面を管理する構成値の取得と設定をします. これら構成値は3つの異なる場所に格納される可能性があります:
 
-*	`/etc/gitconfig` file: Contains values for every user on the system and all their repositories. If you pass the option` --system` to `git config`, it reads and writes from this file specifically. 
-*	`~/.gitconfig` file: Specific to your user. You can make Git read and write to this file specifically by passing the `--global` option. 
-*	config file in the git directory (that is, `.git/config`) of whatever repository you’re currently using: Specific to that single repository. Each level overrides values in the previous level, so values in `.git/config` trump those in `/etc/gitconfig`.
+*	`/etc/gitconfig` ファイル: システム上の全ユーザとそれら全てのリポジトリの値を格納します. 具体的には, オプション ` --system` を `git config` に渡せば, このファイルから読み書きします.
+*	`~/.gitconfig` ファイル: ユーザを特定します. `--global` オプションを渡す事で Git にこのファイルに特定して読み書きさせることができます.
+*	現在作業中のリポジトリ内 git ディレクトリの config ファイル(つまり `.git/config`): 単一リポジトリを特定します. 各レベルがその前のレベル値を上書きします. つまり `.git/config` の値は `/etc/gitconfig` 内の値に勝ります.
 
-On Windows systems, Git looks for the `.gitconfig` file in the `$HOME` directory (`C:\Documents and Settings\$USER` for most people). It also still looks for /etc/gitconfig, although it’s relative to the MSys root, which is wherever you decide to install Git on your Windows system when you run the installer.
+Windows システム上で, Git は `$HOME` ディレクトリ内の `.gitconfig` ファイル(多くの場合は `C:\Documents and Settings\$USER`) を探します. また Msys ルートに関係のある /etc/config も探します. これはインストーラを実行するときに Windows 上のどこでも指定したインストール先です.
 
-### Your Identity ###
+### あなたの ID ###
 
-The first thing you should do when you install Git is to set your user name and e-mail address. This is important because every Git commit uses this information, and it’s immutably baked into the commits you pass around:
+Git をインストールしたら最初にすべきはユーザ名とEメールアドレスの設定です. これは重要です. 何故なら毎回 Git コミットはこの情報を使い, 以下のように渡したコミットに不変的に焼き付けるからです:
 
 	$ git config --global user.name "John Doe"
 	$ git config --global user.email johndoe@example.com
 
-Again, you need to do this only once if you pass the `--global` option, because then Git will always use that information for anything you do on that system. If you want to override this with a different name or e-mail address for specific projects, you can run the command without the `--global` option when you’re in that project.
+もう1度, `--global` オプションを渡すなら1度きりにする必要があります. 何故なら Git は毎回その情報をそのシステム上でする全ての事に使うからです. 異なる名前やEメールアドレスを特定のプロジェクト用に上書きしたいなら, プロジェクト内にいる時 `--global` オプション抜きでコマンドを実行することが出来ます.
 
-### Your Editor ###
+### あなたのエディタ ###
 
-Now that your identity is set up, you can configure the default text editor that will be used when Git needs you to type in a message. By default, Git uses your system’s default editor, which is generally Vi or Vim. If you want to use a different text editor, such as Emacs, you can do the following:
+あなたの ID が設定された今, Git がメッセージを入力してほしい時に使用される標準のテキストエディタを設定できます. 標準では, Git はシステムの標準エディタを使用します. これは通常 Vi か Vim です. 異なるテキストエディタとして Emacs などを使いたいなら, 以下の通り出来ます:
 
 	$ git config --global core.editor emacs
 	
-### Your Diff Tool ###
+### あなたの Diff ツール ###
 
-Another useful option you may want to configure is the default diff tool to use to resolve merge conflicts. Say you want to use vimdiff:
+もう１つ便利なオプションで設定したい可能性があるのが merge 衝突の解決に使用する標準の Diff ツールです. vimdiff を使いたいなら:
 
 	$ git config --global merge.tool vimdiff
 
-Git accepts kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge, and opendiff as valid merge tools. You can also set up a custom tool; see Chapter 7 for more information about doing that.
+Git は kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge, そして opendiff を有効な merge ツールとして受け入れます. またカスタムツールも設定できます. それをするより多くの情報のため第7章をご覧ください.
 
-### Checking Your Settings ###
+### 設定の確認 ###
 
-If you want to check your settings, you can use the `git config --list` command to list all the settings Git can find at that point:
+設定を確認したいなら, その時点で Git が発見できる全設定をリスト化する `git config --list` コマンドを使えます:
 
 	$ git config --list
 	user.name=Scott Chacon
@@ -232,28 +232,28 @@ If you want to check your settings, you can use the `git config --list` command 
 	color.diff=auto
 	...
 
-You may see keys more than once, because Git reads the same key from different files (`/etc/gitconfig` and `~/.gitconfig`, for example). In this case, Git uses the last value for each unique key it sees.
+1つの設定事項に対して1度以上参照することがあります. 何故なら Git は 設定事項1つにつき複数のファイル(例えば `/etc/gitconfig` と `~/.gitconfig` 等)を読むからです. 上記の場合, Git は各々の設定事項が参照する最後の値を使用しています.
 
-You can also check what Git thinks a specific key’s value is by typing `git config {key}`:
+また Git が特定の設定事項の値が何であるか `git config {設定事項}` と入力することで確認できます:
 
 	$ git config user.name
 	Scott Chacon
 
-## Getting Help ##
+## ヘルプの参照 ##
 
-If you ever need help while using Git, there are three ways to get the manual page (manpage) help for any of the Git commands:
+Git 使用中にヘルプが必要になった事があるなら, 全 Git コマンドのマニュアルページ (manpage) ヘルプを得る3つの方法があります:
 
 	$ git help <verb>
 	$ git <verb> --help
 	$ man git-<verb>
 
-For example, you can get the manpage help for the config command by running
+例えば, config コマンドの manpage ヘルプを得るには以下を実行します:
 
 	$ git help config
 
-These commands are nice because you can access them anywhere, even offline.
-If the manpages and this book aren’t enough and you need in-person help, you can try the `#git` or `#github` channel on the Freenode IRC server (irc.freenode.net). These channels are regularly filled with hundreds of people who are all very knowledgeable about Git and are often willing to help.
+これらコマンドは親切です. 何故ならどこからでも, オフラインでさえもアクセス出来ます.
+manpage やこの本が充分でなく人の助けが必要なら, Freenode IRC (irc.freenode.net) の `#git` や `#github` チャンネルを試してみることも可能です. これらチャンネルはたびたび Git に精通し大抵手助けの意志のある数百の人々で埋め尽くされます.
 
-## Summary ##
+## まとめ ##
 
-You should have a basic understanding of what Git is and how it’s different from the CVCS you may have been using. You should also now have a working version of Git on your system that’s set up with your personal identity. It’s now time to learn some Git basics.
+Git とは何かそして今まで使ってきたかも知れない CVCS とどう違うのかの基本的な理解をしたはずです. またあなた個人の ID を設定した Git が今システム上で動いているはずです. 今から Git 基礎学習の時間です.
