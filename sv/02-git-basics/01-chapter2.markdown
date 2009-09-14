@@ -26,21 +26,21 @@ Vi kommer gå igenom vad dessa kommandon gör om en liten stund. Hittils har du 
 
 ### Klona en existerande repository ###
 
-If you want to get a copy of an existing Git repository — for example, a project you’d like to contribute to — the command you need is git clone. If you’re familiar with other VCS systems such as Subversion, you’ll notice that the command is clone and not checkout. This is an important distinction — Git receives a copy of nearly all data that the server has. Every version of every file for the history of the project is pulled down when you run `git clone`. In fact, if your server disk gets corrupted, you can use any of the clones on any client to set the server back to the state it was in when it was cloned (you may lose some server-side hooks and such, but all the versioned data would be there—see Chapter 4 for more details).
+Om du vill kopiera ett existerande Git repository, till exempel från ett projekt som du vill bidra till, är kommandot du söker git clone. Om du är bekandt med andra versionshanteringssystem såsom Subversion, märker du att kommandot är clone istället för checkout. Detta är en viktig skillnad. Git gör en kopia av nästan all data som servern har. Alla versioner av alla filer genom hela historiken för projektet hämtas när du kör `git clone`. Det är rent av så att om din servers hårddisk förstörs, kan du använda vilken klon som helst från vilken klient som helst för att återställa servern till samma läge som när klonen gjordes. (Du kan förlora server-körande hooks etc. men all versionshanterad data kommer vara kvar. Se kapitel 4 för detaljer.)
 
-You clone a repository with `git clone [url]`. For example, if you want to clone the Ruby Git library called Grit, you can do so like this:
+Man klonar ett repository med `git clone [url]`. Till exempel, om du vill klona Rubygitbiblioteket Grit, kör:
 
 	$ git clone git://github.com/schacon/grit.git
 
-That creates a directory named "grit", initializes a `.git` directory inside it, pulls down all the data for that repository, and checks out a working copy of the latest version. If you go into the new `grit` directory, you’ll see the project files in there, ready to be worked on or used. If you want to clone the repository into a directory named something other than grit, you can specify that as the next command-line option:
+Detta skapar en katalog, "grit", initialiserar en `.git`-katalog i denna, hämtar alla data från repositoriet och checkar ut en arbetskopia av den senaste versionen. Om du stegar in i den nya `grit`-katalogen ser du projektets filer, redo att jobbas med eller användas. Om du vill klona repositoryt till en katalog annan än grit, ange det med följande alternativa kommando:
 
 	$ git clone git://github.com/schacon/grit.git mygrit
 
-That command does the same thing as the previous one, but the target directory is called mygrit.
+Det kommandot gör samma sak som det förra, men resultatet hamnar i katalogen mygrit.
 
-Git has a number of different transfer protocols you can use. The previous example uses the `git://` protocol, but you may also see `http(s)://` or `user@server:/path.git`, which uses the SSH transfer protocol. Chapter 4 will introduce all of the available options the server can set up to access your Git repository and the pros and cons of each.
+Git har flera olika överföringsprotokoll att använda. Tidigare exempel använder `git://`-protokollet, men det förekommer också `http(s)://` eller `user@server:/path.git`, som använder SSH som överföringsprotokoll. I kapitel 4 går vi igenom alla tillängliga alternativ för att komma åt servern, och för- och nackdelar för respektive protokoll.
 
-## Recording Changes to the Repository ##
+## Skriva förändringar till repositoriet ##
 
 You have a bona fide Git repository and a checkout or working copy of the files for that project. You need to make some changes and commit snapshots of those changes into your repository each time the project reaches a state you want to record.
 
@@ -49,19 +49,19 @@ Remember that each file in your working directory can be in one of two states: t
 As you edit files, Git sees them as modified, because you’ve changed them since your last commit. You stage these modified files and then commit all your staged changes, and the cycle repeats. This lifecycle is illustrated in Figure 2-1.
 
 Insert 18333fig0201.png 
-Figure 2-1. The lifecycle of the status of your files.
+Figur 2-1. Livscykeln för status på dina filer.
 
-### Checking the Status of Your Files ###
+### Granska status för dina filer ###
 
-The main tool you use to determine which files are in which state is the git status command. If you run this command directly after a clone, you should see something like this:
+Det huvudsakliga verktyget som används för att se läget för dina filer är kommandot git status. Kör du det kommandot direkt följande git clone, kommer du se något motsvarande detta:
 
 	$ git status
 	# On branch master
 	nothing to commit (working directory clean)
 
-This means you have a clean working directory—in other words, there are no tracked and modified files. Git also doesn’t see any untracked files, or they would be listed here. Finally, the command tells you which branch you’re on. For now, that is always master, which is the default; you won’t worry about it here. The next chapter will go over branches and references in detail.
+Det betyder att du har en ren arbetskopia. Med andra ord, det finns inga spårade modifierade filer. Git kan heller inte se några ospårade filer, som annars hade nämnts. Slutligen, kommandot anger vilkan gren du står i. Tills vidare, denna gren är alltid master, vilken är utgångsgrenen. Vi går inte in på det nu, utan tar upp det i detalj i nästa kapitel.
 
-Let’s say you add a new file to your project, a simple README file. If the file didn’t exist before, and you run `git status`, you see your untracked file like so:
+Låt oss anta att du vill lägga till en fil i ditt projekt, en enkel README-fil. Om filen inte existerat tidigare, och du kör `git status`, ser du din ospårade fil:
 
 	$ vim README
 	$ git status
@@ -1130,3 +1130,4 @@ push
 pull
 remote
 repositories
+hooks
