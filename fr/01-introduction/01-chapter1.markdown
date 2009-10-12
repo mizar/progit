@@ -1,25 +1,25 @@
-# Getting Started #
+# Mise en Place #
 
-This chapter will be about getting started with Git.  We will begin at the beginning by explaining some background on version control tools, then move on to how to get Git running on your system and finally how to get it setup to start working with.  At the end of this chapter you should understand why Git is around, why you should use it and you should be all setup to do so.
+Ce chapitre se concentre sur les débuts avec Git.  Nous commencerons à l'origine en explorant l'historique des systèmes de contrôle de version, ensuite procèderons à la mise en place de Git sur votre système et finallement terminerons par sa configuration pour pouvoir commencer à travailler avec cet outil.  A la fin de ce chapitre vous devriez comprendre pouquoi Git existe, pourquoi l'utiliser et vous devriez avoir la configuration nécessaire pour faire cela.
 
-## About Version Control ##
+## A Propos du Contrôle de Version ##
 
-What is version control, and why should you care? Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later. For the examples in this book you will use software source code as the files being version controlled, though in reality you can do this with nearly any type of file on a computer.
+Qu'est ce que le contrôle de version et pourquoi s'en soucier ? Le contrôle de version est un système qui enregistre les changements liés à un fichier ou à un ensemble de fichiers au cours du temps afin de pouvoir revenir à un version précise à un moment ultérieur. Pour les exemples dans ce livre vous utiliserez du code source logiciel pour les fichiers versionnés, mais en réalité vous pouvez appliquer ce concept avec pratiquement tous types de fichiers informatiques.
 
-If you are a graphic or web designer and want to keep every version of an image or layout (which you would most certainly want to), a Version Control System (VCS) is a very wise thing to use. It allows you to revert files back to a previous state, revert the entire project back to a previous state, compare changes over time, see who last modified something that might be causing a problem, who introduced an issue and when, and more. Using a VCS also generally means that if you screw things up or lose files, you can easily recover. In addition, you get all this for very little overhead.
+Si vous êtes un designer graphique ou web et que vous voulez garder chaque version d'une image ou d'une mise en page (ce que vous voudrez certainement faire), un Système de Contrôle de Version (SCV) est une chose très sage à utiliser. Cela vous permet de revenir à un état précédent des fichiers, de revenir à un état précédent du projet complet, de comparer les changement au cours du temps, de voir qui a modifié en dernier une ressources pouvant causer un problème, qui a introduit une erreur et quand, et plus encore. Utiliser un SCV signifie aussi que si vous bousillez ou perdez des fichiers, vous pouvez aisément retomber sur vos pieds. En sus, vous bénéficiez de tout cela avec une complexité ajoutée quasi nulle.
 
-### Local Version Control Systems ###
+### Système de Contrôle de Version Local ###
 
-Many people’s version-control method of choice is to copy files into another directory (perhaps a time-stamped directory, if they’re clever). This approach is very common because it is so simple, but it is also incredibly error prone. It is easy to forget which directory you’re in and accidentally write to the wrong file or copy over files you don’t mean to.
+Pour beaucoup la méthode de contrôle de version de choix est de copier les fichiers dans un autre répertoire (peut-être horodaté, s'ils sont malins). Cette approche est très fréquente car elle est très simple, mais elle est aussi incroyablement sujette aux erreurs. Il est très facile d'oublier dans quel répertoire vous êtes et d'écrire accidentellement dans le mauvais fichier ou d'écraser des fichiers par mégarde au cours d'une copie.
 
-To deal with this issue, programmers long ago developed local VCSs that had a simple database that kept all the changes to files under revision control (see Figure 1-1).
+Pour résoudre ce problème, les développeurs ont depuis longtemps développé des SCVs locaux qui avaient une simple base de données conservant tous les changements des fichiers versionnés (voir figure 1-1).
 
 Insert 18333fig0101.png 
-Figure 1-1. Local version control diagram.
+Figure 1-1. Diagramme de contrôle de version local.
 
-One of the more popular VCS tools was a system called rcs, which is still distributed with many computers today. Even the popular Mac OS X operating system includes the  rcs command when you install the Developer Tools. This tool basically works by keeping patch sets (that is, the differences between files) from one change to another in a special format on disk; it can then re-create what any file looked like at any point in time by adding up all the patches.
+Un des plus populaires outil de SCV s'appelait rcs, qui est toujours disponible sur de nombreux ordinateurs aujourd'hui. Même le populaire système d'exploitation Mac OS X inclus la commande rcs quand vous installez les Outils de Développement. Cet outil fonctionne basiquement en conservant des ensembles de patchs (c'est à dire les différences entre fichiers) d'un changement à un autre dans un format spécial sur le disque; il peut ensuite reconstruire l'état de n'importe quel fichier à n'importe quel moment de son historique en appliquant consécutivement tous les patchs.
 
-### Centralized Version Control Systems ###
+### Système de Contrôle de Version Centralisé ###
 
 The next major issue that people encounter is that they need to collaborate with developers on other systems. To deal with this problem, Centralized Version Control Systems (CVCSs) were developed. These systems, such as CVS, Subversion, and Perforce, have a single server that contains all the versioned files, and a number of clients that check out files from that central place. For many years, this has been the standard for version control (see Figure 1-2).
 
@@ -30,7 +30,7 @@ This setup offers many advantages, especially over local VCSs. For example, ever
 
 However, this setup also has some serious downsides. The most obvious is the single point of failure that the centralized server represents. If that server goes down for an hour, then during that hour nobody can collaborate at all or save versioned changes to anything they’re working on. If the hard disk the central database is on becomes corrupted, and proper backups haven’t been kept, you lose absolutely everything—the entire history of the project except whatever single snapshots people happen to have on their local machines. Local VCS systems suffer from this same problem—whenever you have the entire history of the project in a single place, you risk losing everything.
 
-### Distributed Version Control Systems ###
+### Système de Contrôle de Version Distribué ###
 
 This is where Distributed Version Control Systems (DVCSs) step in. In a DVCS (such as Git, Mercurial, Bazaar or Darcs), clients don’t just check out the latest snapshot of the files: they fully mirror the repository. Thus if any server dies, and these systems were collaborating via it, any of the client repositories can be copied back up to the server to restore it. Every checkout is really a full backup of all the data (see Figure 1-3).
 
