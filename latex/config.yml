@@ -19,3 +19,8 @@ cs:
   sect: "Oddíl "
   fig: "Obrázek "
   tab: "Tabulka "
+pl:
+  chap: "Rozdział "
+  sect: "Sekcja "
+  fig:  "Rysunek "
+  tab:  "Tabela "
