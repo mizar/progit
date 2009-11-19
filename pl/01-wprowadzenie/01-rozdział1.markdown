@@ -2,9 +2,9 @@
 
 Ten rozdział będzie wprowadzeniem do Git'a. Najpierw zostaną wytłumaczone niektóre zastosowania narzędzi do kontroli wersji, następnie zostanie wyjaśnione jak uruchomić Git'a na twoim systemie oraz jak go ustawić aby móc z nim pracować. Na końcu tego rozdziału będziesz rozumiał dlaczego Git jest taki popularny, dlaczego ty powinieneś go używać oraz jak go poprawnie ustawić.
 
-## About Version Control ##
+## O kontroli wersji ##
 
-What is version control, and why should you care? Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later. For the examples in this book you will use software source code as the files being version controlled, though in reality you can do this with nearly any type of file on a computer.
+Czym jest kontrola wersji oraz dlaczego powinno cię to obchodzić? Kontrola wersji to mechanizm, który rejestruje zmiany w pliku lub zbiorach plików na przestrzeni czasu, dzięki czemu jest możliwe odtworzenie konkretnej wersji w okresie późniejszym. W przykładach z tej książki będziesz używać kodu źródłowego oprogramowania w taki sposób że pliki będą wersjonowane, w rzeczywistości możesz to zrobić z niemal z każdym typem pliku na twoim komputerze.
 
 If you are a graphic or web designer and want to keep every version of an image or layout (which you would most certainly want to), a Version Control System (VCS) is a very wise thing to use. It allows you to revert files back to a previous state, revert the entire project back to a previous state, compare changes over time, see who last modified something that might be causing a problem, who introduced an issue and when, and more. Using a VCS also generally means that if you screw things up or lose files, you can easily recover. In addition, you get all this for very little overhead.
 
