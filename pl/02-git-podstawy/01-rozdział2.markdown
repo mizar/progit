@@ -1,12 +1,12 @@
-# Git Basics #
+# Git - podstawy #
 
 If you can read only one chapter to get going with Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you’ll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We’ll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
 
-## Getting a Git Repository ##
+## Pierwsze repozytorium Git'a ##
 
 You can get a Git project using two main approaches. The first takes an existing project or directory and imports it into Git. The second clones an existing Git repository from another server.
 
-### Initializing a Repository in an Existing Directory ###
+### Tworzenie rezpozytorium w istniejącym już katalogu ###
 
 If you’re starting to track an existing project in Git, you need to go to the project’s directory and type
 
@@ -22,7 +22,7 @@ If you want to start version-controlling existing files (as opposed to an empty 
 
 We’ll go over what these commands do in just a minute. At this point, you have a Git repository with tracked files and an initial commit.
 
-### Cloning an Existing Repository ###
+### Klonowanie z istniejącego repozyztorium ###
 
 If you want to get a copy of an existing Git repository — for example, a project you’d like to contribute to — the command you need is git clone. If you’re familiar with other VCS systems such as Subversion, you’ll notice that the command is clone and not checkout. This is an important distinction — Git receives a copy of nearly all data that the server has. Every version of every file for the history of the project is pulled down when you run `git clone`. In fact, if your server disk gets corrupted, you can use any of the clones on any client to set the server back to the state it was in when it was cloned (you may lose some server-side hooks and such, but all the versioned data would be there—see Chapter 4 for more details).
 
@@ -38,7 +38,7 @@ That command does the same thing as the previous one, but the target directory i
 
 Git has a number of different transfer protocols you can use. The previous example uses the `git://` protocol, but you may also see `http(s)://` or `user@server:/path.git`, which uses the SSH transfer protocol. Chapter 4 will introduce all of the available options the server can set up to access your Git repository and the pros and cons of each.
 
-## Recording Changes to the Repository ##
+## Zapisywanie zmian do repozytorium ##
 
 You have a bona fide Git repository and a checkout or working copy of the files for that project. You need to make some changes and commit snapshots of those changes into your repository each time the project reaches a state you want to record.
 
@@ -49,7 +49,7 @@ As you edit files, Git sees them as modified, because you’ve changed them sinc
 Insert 18333fig0201.png 
 Figure 2-1. The lifecycle of the status of your files.
 
-### Checking the Status of Your Files ###
+### Sprawdzanie statusu plików ###
 
 The main tool you use to determine which files are in which state is the git status command. If you run this command directly after a clone, you should see something like this:
 
@@ -72,7 +72,7 @@ Let’s say you add a new file to your project, a simple README file. If the fil
 
 You can see that your new README file is untracked, because it’s under the “Untracked files” heading in your status output. Untracked basically means that Git sees a file you didn’t have in the previous snapshot (commit); Git won’t start including it in your commit snapshots until you explicitly tell it to do so. It does this so you don’t accidentally begin including generated binary files or other files that you did not mean to include. You do want to start including README, so let’s start tracking the file.
 
-### Tracking New Files ###
+### Śledzenie nowych plików ###
 
 In order to begin tracking a new file, you use the command `git add`. To begin tracking the README file, you can run this:
 
@@ -90,7 +90,7 @@ If you run your status command again, you can see that your README file is now t
 
 You can tell that it’s staged because it’s under the “Changes to be committed” heading. If you commit at this point, the version of the file at the time you ran git add is what will be in the historical snapshot. You may recall that when you ran git init earlier, you then ran git add (files) — that was to begin tracking files in your directory. The git add command takes a path name for either a file or a directory; if it’s a directory, the command adds all the files in that directory recursively.
 
-### Staging Modified Files ###
+### Oznaczanie zmodyfikowanych plików ###
 
 Let’s change a file that was already tracked. If you change a previously tracked file called `benchmarks.rb` and then run your `status` command again, you get something that looks like this:
 
@@ -148,7 +148,7 @@ What the heck? Now benchmarks.rb is listed as both staged and unstaged. How is t
 	#	modified:   benchmarks.rb
 	#
 
-### Ignoring Files ###
+### Ignorowanie Plików ###
 
 Often, you’ll have a class of files that you don’t want Git to automatically add or even show you as being untracked. These are generally automatically generated files such as log files or files produced by your build system. In such cases, you can create a file listing patterns to match them named .gitignore.  Here is an example .gitignore file:
 
@@ -176,7 +176,7 @@ Here is another example .gitignore file:
 	build/    # ignore all files in the build/ directory
 	doc/*.txt # ignore doc/notes.txt, but not doc/server/arch.txt
 
-### Viewing Your Staged and Unstaged Changes ###
+### Przeglądanie oznaczonych oraz nie oznaczonych zmian ###
 
 If the `git status` command is too vague for you — you want to know exactly what you changed, not just which files were changed — you can use the `git diff` command. We’ll cover `git diff` in more detail later; but you’ll probably use it most often to answer these two questions: What have you changed but not yet staged? And what have you staged that you are about to commit? Although `git status` answers those questions very generally, `git diff` shows you the exact lines added and removed — the patch, as it were. 
 
@@ -281,7 +281,7 @@ and `git diff --cached` to see what you’ve staged so far:
 	          log = git.commits('master', 15)
 	          log.size
 
-### Committing Your Changes ###
+### Zatwierdzenie oznaczonych zmian ###
 
 Now that your staging area is set up the way you want it, you can commit your changes. Remember that anything that is still unstaged — any files you have created or modified that you haven’t run `git add` on since you edited them — won’t go into this commit. They will stay as modified files on your disk.
 In this case, the last time you ran `git status`, you saw that everything was staged, so you’re ready to commit your changes. The simplest way to commit is to type `git commit`:
@@ -318,7 +318,7 @@ Now you’ve created your first commit! You can see that the commit has given yo
 
 Remember that the commit records the snapshot you set up in your staging area. Anything you didn’t stage is still sitting there modified; you can do another commit to add it to your history. Every time you perform a commit, you’re recording a snapshot of your project that you can revert to or compare to later.
 
-### Skipping the Staging Area ###
+### Pomijanie procesu oznaczania ###
 
 Although it can be amazingly useful for crafting commits exactly how you want them, the staging area is sometimes a bit more complex than you need in your workflow. If you want to skip the staging area, Git provides a simple shortcut. Providing the `-a` option to the `git commit` command makes Git automatically stage every file that is already tracked before doing the commit, letting you skip the `git add` part:
 
@@ -335,7 +335,7 @@ Although it can be amazingly useful for crafting commits exactly how you want th
 
 Notice how you don’t have to run `git add` on the benchmarks.rb file in this case before you commit.
 
-### Removing Files ###
+### Usuwanie plików ###
 
 To remove a file from Git, you have to remove it from your tracked files (more accurately, remove it from your staging area) and then commit. The `git rm` command does that and also removes the file from your working directory so you don’t see it as an untracked file next time around.
 
@@ -380,7 +380,7 @@ Note the backslash (`\`) in front of the `*`. This is necessary because Git does
 
 This command removes all files that end with `~`.
 
-### Moving Files ###
+### Przenoszenie plików ###
 
 Unlike many other VCS systems, Git doesn’t explicitly track file movement. If you rename a file in Git, no metadata is stored in Git that tells it you renamed the file. However, Git is pretty smart about figuring that out after the fact — we’ll deal with detecting file movement a bit later.
 
@@ -409,7 +409,7 @@ However, this is equivalent to running something like this:
 
 Git figures out that it’s a rename implicitly, so it doesn’t matter if you rename a file that way or with the `mv` command. The only real difference is that `mv` is one command instead of three — it’s a convenience function. More important, you can use any tool you like to rename a file, and address the add/rm later, before you commit.
 
-## Viewing the Commit History ##
+## Przeglądanie poszczególnych wersji ##
 
 After you have created several commits, or if you have cloned a repository with an existing commit history, you’ll probably want to look back to see what has happened. The most basic and powerful tool to do this is the `git log` command.
 
@@ -578,7 +578,7 @@ Those are only some simple output-formatting options to `git log` — there are 
 	--graph	Display an ASCII graph of the branch and merge history beside the log output.
 	--pretty	Show commits in an alternate format. Options include oneline, short, full, fuller, and format (where you specify your own format).
 
-### Limiting Log Output ###
+### Filtrowanie wyników komendy Log ###
 
 In addition to output-formatting options, git log takes a number of useful limiting options — that is, options that let you show only a subset of commits. You’ve seen one such option already — the `-2` option, which show only the last two commits. In fact, you can do `-<n>`, where `n` is any integer to show the last `n` commits. In reality, you’re unlikely to use that often, because Git by default pipes all output through a pager so you see only one page of log output at a time.
 
@@ -614,7 +614,7 @@ For example, if you want to see which commits modifying test files in the Git so
 
 Of the nearly 20,000 commits in the Git source code history, this command shows the 6 that match those criteria.
 
-### Using a GUI to Visualize History ###
+### Wizualizacja zmian przy pomocy graficznego interfejsu użytkownika (GUI) ###
 
 If you like to use a more graphical tool to visualize your commit history, you may want to take a look at a Tcl/Tk program called gitk that is distributed with Git. Gitk is basically a visual `git log` tool, and it accepts nearly all the filtering options that `git log` does. If you type gitk on the command line in your project, you should see something like Figure 2-2.
 
@@ -623,11 +623,11 @@ Figure 2-2. The gitk history visualizer.
 
 You can see the commit history in the top half of the window along with a nice ancestry graph. The diff viewer in the bottom half of the window shows you the changes introduced at any commit you click.
 
-## Undoing Things ##
+## Cofanie zmian ##
 
 At any stage, you may want to undo something. Here, we’ll review a few basic tools for undoing changes that you’ve made. Be careful, because you can’t always undo some of these undos. This is one of the few areas in Git where you may lose some work if you do it wrong.
 
-### Changing Your Last Commit ###
+### Modyfikacja ostatniej wersji ###
 
 One of the common undos takes place when you commit too early and possibly forget to add some files, or you mess up your commit message. If you want to try that commit again, you can run commit with the `--amend` option:
 
@@ -645,7 +645,7 @@ As an example, if you commit and then realize you forgot to stage the changes in
 
 All three of these commands end up with a single commit — the second commit replaces the results of the first.
 
-### Unstaging a Staged File ###
+### Odznaczanie już oznaczonych plików ###
 
 The next two sections demonstrate how to wrangle your staging area and working directory changes. The nice part is that the command you use to determine the state of those two areas also reminds you how to undo changes to them. For example, let’s say you’ve changed two files and want to commit them as two separate changes, but you accidentally type `git add *` and stage them both. How can you unstage one of the two? The `git status` command reminds you:
 
@@ -679,7 +679,7 @@ Right below the “Changes to be committed” text, it says use `git reset HEAD 
 
 The command is a bit strange, but it works. The benchmarks.rb file is modified but once again unstaged.
 
-### Unmodifying a Modified File ###
+### Przywracanie ostatniej wersji, zmodyfikowanym plikom ###
 
 What if you realize that you don’t want to keep your changes to the benchmarks.rb file? How can you easily unmodify it — revert it back to what it looked like when you last committed (or initially cloned, or however you got it into your working directory)? Luckily, `git status` tells you how to do that, too. In the last example output, the unstaged area looks like this:
 
@@ -705,12 +705,12 @@ You can see that the changes have been reverted. You should also realize that th
 
 Remember, anything that is committed in Git can almost always be recovered. Even commits that were on branches that were deleted or commits that were overwritten with an `--amend` commit can be recovered (see Chapter 9 for data recovery). However, anything you lose that was never committed is likely never to be seen again.
 
-## Working with Remotes ##
+## Praca zdalna ##
 
 To be able to collaborate on any Git project, you need to know how to manage your remote repositories. Remote repositories are versions of your project that are hosted on the Internet or network somewhere. You can have several of them, each of which generally is either read-only or read/write for you. Collaborating with others involves managing these remote repositories and pushing and pulling data to and from them when you need to share work.
 Managing remote repositories includes knowing how to add remote repositories, remove remotes that are no longer valid, manage various remote branches and define them as being tracked or not, and more. In this section, we’ll cover these remote-management skills.
 
-### Showing Your Remotes ###
+### Przeglądanie zmian na temat zdalnych repozytoriów ###
 
 To see which remote servers you have configured, you can run the git remote command. It lists the shortnames of each remote handle you’ve specified. If you’ve cloned your repository, you should at least see origin — that is the default name Git gives to the server you cloned from:
 
@@ -742,7 +742,7 @@ If you have more than one remote, the command lists them all. For example, my Gr
 
 This means we can pull contributions from any of these users pretty easily. But notice that only the origin remote is an SSH URL, so it’s the only one I can push to (we’ll cover why this is in Chapter 4).
 
-### Adding Remote Repositories ###
+### Dodanie zdalnego repozytorium ###
 
 I’ve mentioned and given some demonstrations of adding remote repositories in previous sections, but here is how to do it explicitly. To add a new remote Git repository as a shortname you can reference easily, run `git remote add [shortname] [url]`:
 
@@ -766,7 +766,7 @@ Now you can use the string pb on the command line in lieu of the whole URL. For 
 
 Paul’s master branch is accessible locally as `pb/master` — you can merge it into one of your branches, or you can check out a local branch at that point if you want to inspect it.
 
-### Fetching and Pulling from Your Remotes ###
+### Pobieranie oraz ciągnięcie ze zdalnego repozytorium ###
 
 As you just saw, to get data from your remote projects, you can run:
 
@@ -778,7 +778,7 @@ If you clone a repository, the command automatically adds that remote repository
 
 If you have a branch set up to track a remote branch (see the next section and Chapter 3 for more information), you can use the `git pull` command to automatically fetch and then merge a remote branch into your current branch. This may be an easier or more comfortable workflow for you; and by default, the `git clone` command automatically sets up your local master branch to track the remote master branch on the server you cloned from (assuming the remote has a master branch). Running `git pull` generally fetches data from the server you originally cloned from and automatically tries to merge it into the code you’re currently working on.
 
-### Pushing to Your Remotes ###
+### Pchanie do zdalnego repozytorim ###
 
 When you have your project at a point that you want to share, you have to push it upstream. The command for this is simple: `git push [remote-name] [branch-name]`. If you want to push your master branch to your `origin` server (again, cloning generally sets up both of those names for you automatically), then you can run this to push your work back up to the server:
 
@@ -786,7 +786,7 @@ When you have your project at a point that you want to share, you have to push i
 
 This command works only if you cloned from a server to which you have write access and if nobody has pushed in the meantime. If you and someone else clone at the same time and they push upstream and then you push upstream, your push will rightly be rejected. You’ll have to pull down their work first and incorporate it into yours before you’ll be allowed to push. See Chapter 3 for more detailed information on how to push to remote servers.
 
-### Inspecting a Remote ###
+### Wgląd w zdalne repozytorium ###
 
 If you want to see more information about a particular remote, you can use the `git remote show [remote-name]` command. If you run this command with a particular shortname, such as `origin`, you get something like this:
 
@@ -827,7 +827,7 @@ That is a simple example you’re likely to encounter. When you’re using Git m
 
 This command shows which branch is automatically pushed when you run `git push` on certain branches. It also shows you which remote branches on the server you don’t yet have, which remote branches you have that have been removed from the server, and multiple branches that are automatically merged when you run `git pull`.
 
-### Removing and Renaming Remotes ###
+### Usuwanie oraz zmiana nazwy dla zdalnych repozytoriów ###
 
 If you want to rename a reference, in newer versions of Git you can run `git remote rename` to change a remote’s shortname. For instance, if you want to rename `pb` to `paul`, you can do so with `git remote rename`:
 
@@ -844,11 +844,11 @@ If you want to remove a reference for some reason — you’ve moved the server 
 	$ git remote
 	origin
 
-## Tagging ##
+## Tagowanie ##
 
 Like most VCSs, Git has the ability to tag specific points in history as being important. Generally, people use this functionality to mark release points (v1.0, and so on). In this section, you’ll learn how to list the available tags, how to create new tags, and what the different types of tags are.
 
-### Listing Your Tags ###
+### Przeglądanie tagów ###
 
 Listing the available tags in Git is straightforward. Just type `git tag`:
 
@@ -866,11 +866,11 @@ You can also search for tags with a particular pattern. The Git source repo, for
 	v1.4.2.3
 	v1.4.2.4
 
-### Creating Tags ###
+### Tworzenie tagu ###
 
 Git uses two main types of tags: lightweight and annotated. A lightweight tag is very much like a branch that doesn’t change — it’s just a pointer to a specific commit. Annotated tags, however, are stored as full objects in the Git database. They’re checksummed; contain the tagger name, e-mail, and date; have a tagging message; and can be signed and verified with GNU Privacy Guard (GPG). It’s generally recommended that you create annotated tags so you can have all this information; but if you want a temporary tag or for some reason don’t want to keep the other information, lightweight tags are available too.
 
-### Annotated Tags ###
+### Dodawanie komentarza do tagu ###
 
 Creating an annotated tag in Git is simple. The easiest way is to specify `-a` when you run the `tag` command:
 
@@ -899,7 +899,7 @@ You can see the tag data along with the commit that was tagged by using the `git
 
 That shows the tagger information, the date the commit was tagged, and the annotation message before showing the commit information.
 
-### Signed Tags ###
+### Podpisywanie tagu ###
 
 You can also sign your tags with GPG, assuming you have a private key. All you have to do is use `-s` instead of `-a`:
 
@@ -932,7 +932,7 @@ If you run `git show` on that tag, you can see your GPG signature attached to it
 
 A bit later, you’ll learn how to verify signed tags.
 
-### Lightweight Tags ###
+### Lekkie tagowanie ###
 
 Another way to tag commits is with a lightweight tag. This is basically the commit checksum stored in a file — no other information is kept. To create a lightweight tag, don’t supply the `-a`, `-s`, or `-m` option:
 
@@ -954,7 +954,7 @@ This time, if you run `git show` on the tag, you don’t see the extra tag infor
 
 	    Merge branch 'experiment'
 
-### Verifying Tags ###
+### Weryfikacja tagu ###
 
 To verify a signed tag, you use `git tag -v [tag-name]`. This command uses GPG to verify the signature. You need the signer’s public key in your keyring for this to work properly:
 
@@ -978,7 +978,7 @@ If you don’t have the signer’s public key, you get something like this inste
 	gpg: Can't check signature: public key not found
 	error: could not verify the tag 'v1.4.2.1'
 
-### Tagging Later ###
+### Tagowanie wstecz ###
 
 You can also tag commits after you’ve moved past them. Suppose your commit history looks like this:
 
@@ -1021,7 +1021,7 @@ You can see that you’ve tagged the commit:
 	    updated rakefile
 	...
 
-### Sharing Tags ###
+### Współdzielenie tagów ###
 
 By default, the `git push` command doesn’t transfer tags to remote servers. You will have to explicitly push tags to a shared server after you have created them.  This process is just like sharing remote branches – you can run `git push origin [tagname]`.
 
@@ -1049,11 +1049,11 @@ If you have a lot of tags that you want to push up at once, you can also use the
 
 Now, when someone else clones or pulls from your repository, they will get all your tags as well.
 
-## Tips and Tricks ##
+## Porady i Sztuczki ##
 
 Before we finish this chapter on basic Git, a few little tips and tricks may make your Git experience a bit simpler, easier, or more familiar. Many people use Git without using any of these tips, and we won’t refer to them or assume you’ve used them later in the book; but you should probably know how to do them.
 
-### Auto-Completion ###
+### Autouzupełnianie ###
 
 If you use the Bash shell, Git comes with a nice auto-completion script you can enable. Download the Git source code, and look in the `contrib/completion` directory; there should be a file called `git-completion.bash`. Copy this file to your home directory, and add this to your `.bashrc` file:
 
@@ -1077,7 +1077,7 @@ This also works with options, which is probably more useful. For instance, if yo
 
 That’s a pretty nice trick and may save you some time and documentation reading.
 
-### Git Aliases ###
+### Aliasy w gicie ###
 
 Git doesn’t infer your command if you type it in partially. If you don’t want to type the entire text of each of the Git commands, you can easily set up an alias for each command using `git config`. Here are a couple of examples you may want to set up:
 
@@ -1116,6 +1116,6 @@ As you can tell, Git simply replaces the new command with whatever you alias it 
 
 	$ git config --global alias.visual "!gitk"
 
-## Summary ##
+## Podsumowanie ##
 
 At this point, you can do all the basic local Git operations — creating or cloning a repository, making changes, staging and committing those changes, and viewing the history of all the changes the repository has been through. Next, we’ll cover Git’s killer feature: its branching model.
