@@ -1,10 +1,10 @@
-# Git Branching #
+# Git gałęzie #
 
 Nearly every VCS has some form of branching support. Branching means you diverge from the main line of development and continue to do work without messing with that main line. In many VCS tools, this is a somewhat expensive process, often requiring you to create a new copy of your source code directory, which can take a long time for large projects.
 
 Some people refer to the branching model in Git as its “killer feature,” and it certainly sets Git apart in the VCS community. Why is it so special? The way Git branches is incredibly lightweight, making branching operations nearly instantaneous and switching back and forth between branches generally just as fast. Unlike many other VCSs, Git encourages a workflow that branches and merges often, even multiple times in a day. Understanding and mastering this feature gives you a powerful and unique tool and can literally change the way that you develop.
 
-## What a Branch Is ##
+## Czym gałąź jest ##
 
 To really understand the way Git does branching, we need to take a step back and examine how Git stores its data. As you may remember from Chapter 1, Git doesn’t store data as a series of changesets or deltas, but instead as a series of snapshots.
 
@@ -92,7 +92,7 @@ This is in sharp contrast to the way most VCS tools branch, which involves copyi
 
 Let’s see why you should do so.
 
-## Basic Branching and Merging ##
+## Podstawy tworzenia gałęzi oraz ich łączenia ##
 
 Let’s go through a simple example of branching and merging with a workflow that you might use in the real world. You’ll follow these steps:
 
@@ -107,7 +107,7 @@ At this stage, you’ll receive a call that another issue is critical and you ne
 3.	After it’s tested, merge the hotfix branch, and push to production.
 4.	Switch back to your original story and continue working.
 
-### Basic Branching ###
+### Podstawy pracy z gałęziami ###
 
 First, let’s say you’re working on your project and have a couple of commits already (see Figure 3-10).
 
@@ -193,7 +193,7 @@ Figure 3-15. Your iss53 branch can move forward independently.
 
 It’s worth noting here that the work you did in your `hotfix` branch is not contained in the files in your `iss53` branch. If you need to pull it in, you can merge your `master` branch into your `iss53` branch by running `git merge master`, or you can wait to integrate those changes until you decide to pull the `iss53` branch back into `master` later.
 
-### Basic Merging ###
+### Podstawy łączenia ###
 
 Suppose you’ve decided that your issue #53 work is complete and ready to be merged into your `master` branch. In order to do that, you’ll merge in your `iss53` branch, much like you merged in your `hotfix` branch earlier. All you have to do is check out the branch you wish to merge into and then run the `git merge` command:
 
@@ -219,7 +219,7 @@ Now that your work is merged in, you have no further need for the `iss53` branch
 
 	$ git branch -d iss53
 
-### Basic Merge Conflicts ###
+### Podstawy rozwiązywania konflików w czasie łączęnia ###
 
 Occasionally, this process doesn’t go smoothly. If you changed the same part of the same file differently in the two branches you’re merging together, Git won’t be able to merge them cleanly. If your fix for issue #53 modified the same part of a file as the `hotfix`, you’ll get a merge conflict that looks something like this:
 
@@ -297,7 +297,7 @@ If you’re happy with that, and you verify that everything that had conflicts h
 
 You can modify that message with details about how you resolved the merge if you think it would be helpful to others looking at this merge in the future — why you did what you did, if it’s not obvious.
 
-## Branch Management ##
+## Zarządzanie gałęziami ##
 
 Now that you’ve created, merged, and deleted some branches, let’s look at some branch-management tools that will come in handy when you begin using branches all the time.
 
@@ -336,11 +336,11 @@ This shows your other branch. Because it contains work that isn’t merged in ye
 
 If you really do want to delete the branch and lose that work, you can force it with `-D`, as the helpful message points out.
 
-## Branching Workflows ##
+## Cykl pracy z gałęziami ##
 
 Now that you have the basics of branching and merging down, what can or should you do with them? In this section, we’ll cover some common workflows that this lightweight branching makes possible, so you can decide if you would like to incorporate it into your own development cycle.
 
-### Long-Running Branches ###
+### Długo terminowe gałęzie ###
 
 Because Git uses a simple three-way merge, merging from one branch into another multiple times over a long period is generally easy to do. This means you can have several branches that are always open and that you use for different stages of your development cycle; you can merge regularly from some of them into others.
 
@@ -359,7 +359,7 @@ Figure 3-19. It may be helpful to think of your branches as silos.
 You can keep doing this for several levels of stability. Some larger projects also have a `proposed` or `pu` (proposed updates) branch that has integrated branches that may not be ready to go into the `next` or `master` branch. The idea is that your branches are at various levels of stability; when they reach a more stable level, they’re merged into the branch above them.
 Again, having multiple long-running branches isn’t necessary, but it’s often helpful, especially when you’re dealing with very large or complex projects.
 
-### Topic Branches ###
+### Gałęzie tematyczne ###
 
 Topic branches, however, are useful in projects of any size. A topic branch is a short-lived branch that you create and use for a single particular feature or related work. This is something you’ve likely never done with a VCS before because it’s generally too expensive to create and merge branches. But in Git it’s common to create, work on, merge, and delete branches several times a day.
 
@@ -377,7 +377,7 @@ Figure 3-21. Your history after merging in dumbidea and iss91v2.
 
 It’s important to remember when you’re doing all this that these branches are completely local. When you’re branching and merging, everything is being done only in your Git repository — no server communication is happening.
 
-## Remote Branches ##
+## Zdalne gałęzie ##
 
 Remote branches are references to the state of branches on your remote repositories. They’re local branches that you can’t move; they’re moved automatically whenever you do any network communication. Remote branches act as bookmarks to remind you where the branches on your remote repositories were the last time you connected to them.
 
@@ -408,7 +408,7 @@ Now, you can run `git fetch teamone` to fetch everything server has that you don
 Insert 18333fig0326.png 
 Figure 3-26. You get a reference to teamone’s master branch position locally.
 
-### Pushing ###
+### Pchanie ###
 
 When you want to share a branch with the world, you need to push it up to a remote that you have write access to. Your local branches aren’t automatically synchronized to the remotes you write to — you have to explicitly push the branches you want to share. That way, you can use private branches for work you don’t want to share, and push up only the topic branches you want to collaborate on.
 
@@ -444,7 +444,7 @@ To merge this work into your current working branch, you can run `git merge orig
 
 This gives you a local branch that you can work on that starts where `origin/serverfix` is.
 
-### Tracking Branches ###
+### Gałęzie śledzone ###
 
 Checking out a local branch from a remote branch automatically creates what is called a _tracking branch_. Tracking branches are local branches that have a direct relationship to a remote branch. If you’re on a tracking branch and type git push, Git automatically knows which server and branch to push to. Also, running `git pull` while on one of these branches fetches all the remote references and then automatically merges in the corresponding remote branch.
 
@@ -462,7 +462,7 @@ To set up a local branch with a different name than the remote branch, you can e
 
 Now, your local branch sf will automatically push to and pull from origin/serverfix.
 
-### Deleting Remote Branches ###
+### Usuwanie zdalnych gałęzi ###
 
 Suppose you’re done with a remote branch — say, you and your collaborators are finished with a feature and have merged it into your remote’s `master` branch (or whatever branch your stable codeline is in). You can delete a remote branch using the rather obtuse syntax `git push [remotename] :[branch]`. If you want to delete your `serverfix` branch from the server, you run the following:
 
@@ -472,11 +472,11 @@ Suppose you’re done with a remote branch — say, you and your collaborators a
 
 Boom. No more branch on your server. You may want to dog-ear this page, because you’ll need that command, and you’ll likely forget the syntax. A way to remember this command is by recalling the `git push [remotename] [localbranch]:[remotebranch]` syntax that we went over a bit earlier. If you leave off the `[localbranch]` portion, then you’re basically saying, “Take nothing on my side and make it be `[remotebranch]`.”
 
-## Rebasing ##
+## Rebasing !sic! ##
 
 In Git, there are two main ways to integrate changes from one branch into another: the `merge` and the `rebase`. In this section you’ll learn what rebasing is, how to do it, why it’s a pretty amazing tool, and in what cases you won’t want to use it.
 
-### The Basic Rebase ###
+### Podstawy Rebase ###
 
 If you go back to an earlier example from the Merge section (see Figure 3-27), you can see that you diverged your work and made commits on two different branches.
 
@@ -513,7 +513,7 @@ Often, you’ll do this to make sure your commits apply cleanly on a remote bran
 
 Note that the snapshot pointed to by the final commit you end up with, whether it’s the last of the rebased commits for a rebase or the final merge commit after a merge, is the same snapshot — it’s only the history that is different. Rebasing replays changes from one line of work onto another in the order they were introduced, whereas merging takes the endpoints and merges them together.
 
-### More Interesting Rebases ###
+### Ciekawsze przykłady Rebases ###
 
 You can also have your rebase replay on something other than the rebase branch. Take a history like Figure 3-31, for example. You branched a topic branch (`server`) to add some server-side functionality to your project, and made a commit. Then, you branched off that to make the client-side changes (`client`) and committed a few times. Finally, you went back to your server branch and did a few more commits.
 
@@ -559,7 +559,7 @@ You can remove the `client` and `server` branches because all the work is integr
 Insert 18333fig0335.png 
 Figure 3-35. Final commit history.
 
-### The Perils of Rebasing ###
+### Przygody związane z Rebasing ###
 
 Ahh, but the bliss of rebasing isn’t without its drawbacks, which can be summed up in a single line:
 
@@ -593,6 +593,6 @@ You have to merge that work in at some point so you can keep up with the other d
 
 If you treat rebasing as a way to clean up and work with commits before you push them, and if you only rebase commits that have never been available publicly, then you’ll be fine. If you rebase commits that have already been pushed publicly, and people may have based work on those commits, then you may be in for some frustrating trouble.
 
-## Summary ##
+## Podsumowanie ##
 
 We’ve covered basic branching and merging in Git. You should feel comfortable creating and switching to new branches, switching between branches and merging local branches together.  You should also be able to share your branches by pushing them to a shared server, working with others on shared branches and rebasing your branches before they are shared.
