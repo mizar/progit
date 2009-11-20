@@ -1,14 +1,14 @@
-# Distributed Git #
+# Rozproszony Git #
 
 Now that you have a remote Git repository set up as a point for all the developers to share their code, and you’re familiar with basic Git commands in a local workflow, you’ll look at how to utilize some of the distributed workflows that Git affords you.
 
 In this chapter, you’ll see how to work with Git in a distributed environment as a contributor and an integrator. That is, you’ll learn how to contribute code successfully to a project and make it as easy on you and the project maintainer as possible, and also how to maintain a project successfully with a number of developers contributing.
 
-## Distributed Workflows ##
+## Cykl pracy rozproszony ##
 
 Unlike Centralized Version Control Systems (CVCSs), the distributed nature of Git allows you to be far more flexible in how developers collaborate on projects. In centralized systems, every developer is a node working more or less equally on a central hub. In Git, however, every developer is potentially both a node and a hub — that is, every developer can both contribute code to other repositories and maintain a public repository on which others can base their work and which they can contribute to. This opens a vast range of workflow possibilities for your project and/or your team, so I’ll cover a few common paradigms that take advantage of this flexibility. I’ll go over the strengths and possible weaknesses of each design; you can choose a single one to use, or you can mix and match features from each.
 
-### Centralized Workflow ###
+### Cykl pracy scentralizowany ###
 
 In centralized systems, there is generally a single collaboration model—the centralized workflow. One central hub, or repository, can accept code, and everyone synchronizes their work to it. A number of developers are nodes — consumers of that hub — and synchronize to that one place (see Figure 5-1).
 
@@ -20,7 +20,7 @@ This means that if two developers clone from the hub and both make changes, the 
 If you have a small team or are already comfortable with a centralized workflow in your company or team, you can easily continue using that workflow with Git. Simply set up a single repository, and give everyone on your team push access; Git won’t let users overwrite each other. If one developer clones, makes changes, and then tries to push their changes while another developer has pushed in the meantime, the server will reject that developer’s changes. They will be told that they’re trying to push non-fast-forward changes and that they won’t be able to do so until they fetch and merge.
 This workflow is attractive to a lot of people because it’s a paradigm that many are familiar and comfortable with.
 
-### Integration-Manager Workflow ###
+### Cykl pracy oparty o manadżera integracji ###
 
 Because Git allows you to have multiple remote repositories, it’s possible to have a workflow where each developer has write access to their own public repository and read access to everyone else’s. This scenario often includes a canonical repository that represents the "official" project. To contribute to that project, you create your own public clone of the project and push your changes to it. Then, you can send a request to the maintainer of the main project to pull in your changes. They can add your repository as a remote, test your changes locally, merge them into their branch, and push back to their repository. The process works as follow (see Figure 5-2):
 
@@ -36,7 +36,7 @@ Figure 5-2. Integration-manager workflow.
 
 This is a very common workflow with sites like GitHub, where it’s easy to fork a project and push your changes into your fork for everyone to see. One of the main advantages of this approach is that you can continue to work, and the maintainer of the main repository can pull in your changes at any time. Contributors don’t have to wait for the project to incorporate their changes — each party can work at their own pace.
 
-### Dictator and Lieutenants Workflow ###
+### Cykl pracy dyktator i porucznik ###
 
 This is a variant of a multiple-repository workflow. It’s generally used by huge projects with hundreds of collaborators; one famous example is the Linux kernel. Various integration managers are in charge of certain parts of the repository; they’re called lieutenants. All the lieutenants have one integration manager known as the benevolent dictator. The benevolent dictator’s repository serves as the reference repository from which all the collaborators need to pull. The process works like this (see Figure 5-3):
 
@@ -52,7 +52,7 @@ This kind of workflow isn’t common but can be useful in very big projects or i
 
 These are some commonly used workflows that are possible with a distributed system like Git, but you can see that many variations are possible to suit your particular real-world workflow. Now that you can (I hope) determine which workflow combination may work for you, I’ll cover some more specific examples of how to accomplish the main roles that make up the different flows.
 
-## Contributing to a Project ##
+## Współpraca w projekcie ##
 
 You know what the different workflows are, and you should have a pretty good grasp of fundamental Git usage. In this section, you’ll learn about a few common patterns for contributing to a project.
 
@@ -66,7 +66,7 @@ The next issue is your commit access. The workflow required in order to contribu
 
 All these questions can affect how you contribute effectively to a project and what workflows are preferred or available to you. I’ll cover aspects of each of these in a series of use cases, moving from simple to more complex; you should be able to construct the specific workflows you need in practice from these examples.
 
-### Commit Guidelines ###
+### Wskazówki dotyczące komitowania ###
 
 Before you start looking at the specific use cases, here’s a quick note about commit messages. Having a good guideline for creating commits and sticking to it makes working with Git and collaborating with others a lot easier. The Git project provides a document that lays out a number of good tips for creating commits from which to submit patches — you can read it in the Git source code in the `Documentation/SubmittingPatches` file.
 
@@ -107,7 +107,7 @@ If all your commit messages look like this, things will be a lot easier for you 
 
 In the following examples, and throughout most of this book, for the sake of brevity I don’t format messages nicely like this; instead, I use the `-m` option to `git commit`. Do as I say, not as I do.
 
-### Private Small Team ###
+### Mały prywatny zespół ###
 
 The simplest setup you’re likely to encounter is a private project with one or two other developers. By private, I mean closed source — not read-accessible to the outside world. You and the other developers all have push access to the repository.
 
@@ -260,7 +260,7 @@ That is one of the simplest workflows. You work for a while, generally in a topi
 Insert 18333fig0511.png 
 Figure 5-11. General sequence of events for a simple multiple-developer Git workflow.
 
-### Private Managed Team ###
+### Zarządzany prywatny zespół ###
 
 In this next scenario, you’ll look at contributor roles in a larger private group. You’ll learn how to work in an environment where small groups collaborate on features and then those team-based contributions are integrated by another party.
 
@@ -381,7 +381,7 @@ Many groups switch to Git because of this ability to have multiple teams working
 Insert 18333fig0515.png 
 Figure 5-15. Basic sequence of this managed-team workflow.
 
-### Public Small Project ###
+### Otwarty mały projekt ###
 
 Contributing to public projects is a bit different. Because you don’t have the permissions to directly update branches on the project, you have to get the work to the maintainers some other way. This first example describes contributing via forking on Git hosts that support easy forking. The repo.or.cz and GitHub hosting sites both support this, and many project maintainers expect this style of contribution. The next section deals with projects that prefer to accept contributed patches via e-mail.
 
@@ -469,7 +469,7 @@ Now you can send the maintainer a message that you’ve made the requested chang
 Insert 18333fig0518.png 
 Figure 5-18. Commit history after featureBv2 work.
 
-### Public Large Project ###
+### Duży otwarty projekt ###
 
 Many larger projects have established procedures for accepting patches — you’ll need to check the specific rules for each project, because they will differ. However, many larger public projects accept patches via a developer mailing list, so I’ll go over an example of that now.
 
@@ -561,15 +561,15 @@ Then, Git spits out a bunch of log information looking something like this for e
 
 At this point, you should be able to go to your Drafts folder, change the To field to the mailing list you’re sending the patch to, possibly CC the maintainer or person responsible for that section, and send it off.
 
-### Summary ###
+### Podsumowanie ###
 
 This section has covered a number of common workflows for dealing with several very different types of Git projects you’re likely to encounter and introduced a couple of new tools to help you manage this process. Next, you’ll see how to work the other side of the coin: maintaining a Git project. You’ll learn how to be a benevolent dictator or integration manager.
 
-## Maintaining a Project ##
+## Zarządzanie projektem ##
 
 In addition to knowing how to effectively contribute to a project, you’ll likely need to know how to maintain one. This can consist of accepting and applying patches generated via `format-patch` and e-mailed to you, or integrating changes in remote branches for repositories you’ve added as remotes to your project. Whether you maintain a canonical repository or want to help by verifying or approving patches, you need to know how to accept work in a way that is clearest for other contributors and sustainable by you over the long run.
 
-### Working in Topic Branches ###
+### Praca na tematycznych gałęziach ###
 
 When you’re thinking of integrating new work, it’s generally a good idea to try it out in a topic branch — a temporary branch specifically made to try out that new work. This way, it’s easy to tweak a patch individually and leave it if it’s not working until you have time to come back to it. If you create a simple branch name based on the theme of the work you’re going to try, such as `ruby_client` or something similarly descriptive, you can easily remember it if you have to abandon it for a while and come back later. The maintainer of the Git project tends to namespace these branches as well — such as `sc/ruby_client`, where `sc` is short for the person who contributed the work. 
 As you’ll remember, you can create the branch based off your master branch like this:
@@ -582,11 +582,11 @@ Or, if you want to also switch to it immediately, you can use the `checkout -b` 
 
 Now you’re ready to add your contributed work into this topic branch and determine if you want to merge it into your longer-term branches.
 
-### Applying Patches from E-mail ###
+### Nakładanie łat przysłanych drogą mailową ###
 
 If you receive a patch over e-mail that you need to integrate into your project, you need to apply the patch in your topic branch to evaluate it. There are two ways to apply an e-mailed patch: with `git apply` or with `git am`.
 
-#### Applying a Patch with apply ####
+#### Nakładanie łątek za pomocą narzędzia *apply* ####
 
 If you received the patch from someone who generated it with the `git diff` or a Unix `diff` command, you can apply it with the `git apply` command. Assuming you saved the patch at `/tmp/patch-ruby-client.patch`, you can apply the patch like this:
 
@@ -602,7 +602,7 @@ You can also use git apply to see if a patch applies cleanly before you try actu
 
 If there is no output, then the patch should apply cleanly. This command also exits with a non-zero status if the check fails, so you can use it in scripts if you want.
 
-#### Applying a Patch with am ####
+#### Nakładanie łątek za pomocą narzędzia *am* ####
 
 If the contributor is a Git user and was good enough to use the `format-patch` command to generate their patch, then your job is easier because the patch contains author information and a commit message for you. If you can, encourage your contributors to use `format-patch` instead of `diff` to generate patches for you. You should only have to use `git apply` for legacy patches and things like that.
 
@@ -680,7 +680,7 @@ This is nice if you have a number of patches saved, because you can view the pat
 
 When all the patches for your topic are applied and committed into your branch, you can choose whether and how to integrate them into a longer-running branch.
 
-### Checking Out Remote Branches ###
+### Pobieranie gałęzi zdalnych ###
 
 If your contribution came from a Git user who set up their own repository, pushed a number of changes into it, and then sent you the URL to the repository and the name of the remote branch the changes are in, you can add them as a remote and do merges locally.
 
@@ -703,7 +703,7 @@ If you aren’t working with a person consistently but still want to pull from t
 	 * branch            HEAD       -> FETCH_HEAD
 	Merge made by recursive.
 
-### Determining What Is Introduced ###
+### Określanie jakie zmiany zostały wprowadzone ###
 
 Now you have a topic branch that contains contributed work. At this point, you can determine what you’d like to do with it. This section revisits a couple of commands so you can see how you can use them to review exactly what you’ll be introducing if you merge this into your main branch.
 
@@ -746,11 +746,11 @@ However, that isn’t convenient, so Git provides another shorthand for doing th
 
 This command shows you only the work your current topic branch has introduced since its common ancestor with master. That is a very useful syntax to remember.
 
-### Integrating Contributed Work ###
+### Przyłączanie nadesłanych zmian ###
 
 When all the work in your topic branch is ready to be integrated into a more mainline branch, the question is how to do it. Furthermore, what overall workflow do you want to use to maintain your project? You have a number of choices, so I’ll cover a few of them.
 
-#### Merging Workflows ####
+#### Cykl pracy procesu łączenia ####
 
 One simple workflow merges your work into your `master` branch. In this scenario, you have a `master` branch that contains basically stable code. When you have work in a topic branch that you’ve done or that someone has contributed and you’ve verified, you merge it into your master branch, delete the topic branch, and then continue the process.  If we have a repository with work in two branches named `ruby_client` and `php_client` that looks like Figure 5-19 and merge `ruby_client` first and then `php_client` next, then your history will end up looking like Figure 5-20.
 
@@ -776,7 +776,7 @@ Figure 5-23. After a topic branch release.
 This way, when people clone your project’s repository, they can either check out master to build the latest stable version and keep up to date on that easily, or they can check out develop, which is the more cutting-edge stuff.
 You can also continue this concept, having an integrate branch where all the work is merged together. Then, when the codebase on that branch is stable and passes tests, you merge it into a develop branch; and when that has proven itself stable for a while, you fast-forward your master branch.
 
-#### Large-Merging Workflows ####
+#### Cykl paracy procesu łączenia dużych zmian ####
 
 The Git project has four long-running branches: `master`, `next`, and `pu` (proposed updates) for new work, and `maint` for maintenance backports. When new work is introduced by contributors, it’s collected into topic branches in the maintainer’s repository in a manner similar to what I’ve described (see Figure 5-24). At this point, the topics are evaluated to determine whether they’re safe and ready for consumption or whether they need more work. If they’re safe, they’re merged into `next`, and that branch is pushed up so everyone can try the topics integrated together.
 
@@ -790,7 +790,7 @@ Figure 5-25. Merging contributed topic branches into long-term integration branc
 
 When a topic branch has finally been merged into `master`, it’s removed from the repository. The Git project also has a `maint` branch that is forked off from the last release to provide backported patches in case a maintenance release is required. Thus, when you clone the Git repository, you have four branches that you can check out to evaluate the project in different stages of development, depending on how cutting edge you want to be or how you want to contribute; and the maintainer has a structured workflow to help them vet new contributions.
 
-#### Rebasing and Cherry Picking Workflows ####
+#### Cykl pracy w *rebasing* oraz łączenie selektywne ####
 
 Other maintainers prefer to rebase or cherry-pick contributed work on top of their master branch, rather than merging it in, to keep a mostly linear history. When you have work in a topic branch and have determined that you want to integrate it, you move to that branch and run the rebase command to rebuild the changes on top of your current master (or `develop`, and so on) branch. If that works well, you can fast-forward your `master` branch, and you’ll end up with a linear project history.
 
@@ -813,7 +813,7 @@ Figure 5-27. History after cherry-picking a commit on a topic branch.
 
 Now you can remove your topic branch and drop the commits you didn’t want to pull in.
 
-### Tagging Your Releases ###
+### Tagowanie wersji ###
 
 When you’ve decided to cut a release, you’ll probably want to drop a tag so you can re-create that release at any point going forward. You can create a new tag as I discussed in Chapter 2. If you decide to sign the tag as the maintainer, the tagging may look something like this:
 
@@ -846,7 +846,7 @@ If you run `git push --tags`, the `maintainer-pgp-pub` tag will be shared with e
 
 They can use that key to verify all your signed tags. Also, if you include instructions in the tag message, running `git show <tag>` will let you give the end user more specific instructions about tag verification.
 
-### Generating a Build Number ###
+### Generowanie numeru wydania ###
 
 Because Git doesn’t have monotonically increasing numbers like 'v123' or the equivalent to go with each commit, if you want to have a human-readable name to go with a commit, you can run `git describe` on that commit. Git gives you the name of the nearest tag with the number of commits on top of that tag and a partial SHA-1 value of the commit you’re describing:
 
@@ -857,7 +857,7 @@ This way, you can export a snapshot or build and name it something understandabl
 
 The `git describe` command favors annotated tags (tags created with the `-a` or `-s` flag), so release tags should be created this way if you’re using `git describe`, to ensure the commit is named properly when described. You can also use this string as the target of a checkout or show command, although it relies on the abbreviated SHA-1 value at the end, so it may not be valid forever. For instance, the Linux kernel recently jumped from 8 to 10 characters to ensure SHA-1 object uniqueness, so older `git describe` output names were invalidated.
 
-### Preparing a Release ###
+### Przygotowanie do wydania ###
 
 Now you want to release a build. One of the things you’ll want to do is create an archive of the latest snapshot of your code for those poor souls who don’t use Git. The command to do this is `git archive`:
 
@@ -871,7 +871,7 @@ If someone opens that tarball, they get the latest snapshot of your project unde
 
 You now have a nice tarball and a zip archive of your project release that you can upload to your website or e-mail to people.
 
-### The Shortlog ###
+### Skrócona lista zmian ###
 
 It’s time to e-mail your mailing list of people who want to know what’s happening in your project. A nice way of quickly getting a sort of changelog of what has been added to your project since your last release or e-mail is to use the `git shortlog` command. It summarizes all the commits in the range you give it; for example, the following gives you a summary of all the commits since your last release, if your last release was named v1.0.1:
 
@@ -892,6 +892,6 @@ It’s time to e-mail your mailing list of people who want to know what’s happ
 
 You get a clean summary of all the commits since v1.0.1, grouped by author, that you can e-mail to your list.
 
-## Summary ##
+## Podsumowanie ##
 
 You should feel fairly comfortable contributing to a project in Git as well as maintaining your own project or integrating other users’ contributions. Congratulations on being an effective Git developer! In the next chapter, you’ll learn more powerful tools and tips for dealing with complex situations, which will truly make you a Git master.
