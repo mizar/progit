@@ -627,7 +627,7 @@ You can see the commit history in the top half of the window along with a nice a
 
 At any stage, you may want to undo something. Here, we’ll review a few basic tools for undoing changes that you’ve made. Be careful, because you can’t always undo some of these undos. This is one of the few areas in Git where you may lose some work if you do it wrong.
 
-### Modyfikacja ostatniej wersji ###
+### Modyfikacja ostatniej migawki ###
 
 One of the common undos takes place when you commit too early and possibly forget to add some files, or you mess up your commit message. If you want to try that commit again, you can run commit with the `--amend` option:
 
