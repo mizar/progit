@@ -1,8 +1,8 @@
-# Customizing Git #
+# Ustawienia Git'a #
 
 So far, I’ve covered the basics of how Git works and how to use it, and I’ve introduced a number of tools that Git provides to help you use it easily and efficiently. In this chapter, I’ll go through some operations that you can use to make Git operate in a more customized fashion by introducing several important configuration settings and the hooks system. With these tools, it’s easy to get Git to work exactly the way you, your company, or your group needs it to.
 
-## Git Configuration ##
+## Konfiguracja Git'a ##
 
 As you briefly saw in the Chapter 1, you can specify Git configuration settings with the `git config` command. One of the first things you did was set up your name and e-mail address:
 
@@ -17,7 +17,7 @@ The next place Git looks is the `~/.gitconfig` file, which is specific to each u
 
 Finally, Git looks for configuration values in the config file in the Git directory (`.git/config`) of whatever repository you’re currently using. These values are specific to that single repository. Each level overwrites values in the previous level, so values in `.git/config` trump those in `/etc/gitconfig`, for instance. You can also set these values by manually editing the file and inserting the correct syntax, but it’s generally easier to run the `git config` command.
 
-### Basic Client Configuration ###
+### Podstawowa konfiguracja klienta ###
 
 The configuration options recognized by Git fall into two categories: client side and server side. The majority of the options are client side—configuring your personal working preferences. Although tons of options are available, I’ll only cover the few that either are commonly used or can significantly affect your workflow. Many options are useful only in edge cases that I won’t go over here. If you want to see a list of all the options your version of Git recognizes, you can run
 
@@ -25,7 +25,7 @@ The configuration options recognized by Git fall into two categories: client sid
 
 The manual page for `git config` lists all the available options in quite a bit of detail.
 
-#### core.editor ####
+#### główny edytor - *core.editor* ####
 
 By default, Git uses whatever you’ve set as your default text editor or else falls back to the Vi editor to create and edit your commit and tag messages. To change that default to something else, you can use the `core.editor` setting:
 
@@ -33,7 +33,7 @@ By default, Git uses whatever you’ve set as your default text editor or else f
 
 Now, no matter what is set as your default shell editor variable, Git will fire up Emacs to edit messages.
 
-#### commit.template ####
+#### templatki komentarzy - *commit.template* ####
 
 If you set this to the path of a file on your system, Git will use that file as the default message when you commit. For instance, suppose you create a template file at `$HOME/.gitmessage.txt` that looks like this:
 
@@ -69,7 +69,7 @@ Then, your editor will open to something like this for your placeholder commit m
 
 If you have a commit-message policy in place, then putting a template for that policy on your system and configuring Git to use it by default can help increase the chance of that policy being followed regularly.
 
-#### core.pager ####
+#### obsługa paginacji wyjścia - *core.pager* ####
 
 The core.pager setting determines what pager is used when Git pages output such as `log` and `diff`. You can set it to `more` or to your favorite pager (by default, it’s `less`), or you can turn it off by setting it to a blank string:
 
@@ -77,7 +77,7 @@ The core.pager setting determines what pager is used when Git pages output such 
 
 If you run that, Git will page the entire output of all commands, no matter how long they are.
 
-#### user.signingkey ####
+#### klucz do podpisywania tagów - *user.signingkey* ####
 
 If you’re making signed annotated tags (as discussed in Chapter 2), setting your GPG signing key as a configuration setting makes things easier. Set your key ID like so:
 
@@ -87,11 +87,11 @@ Now, you can sign tags without having to specify your key every time with the `g
 
 	$ git tag -s <tag-name>
 
-#### core.excludesfile ####
+#### ukrywanie plików - *core.excludesfile* ####
 
 You can put patterns in your project’s `.gitignore` file to have Git not see them as untracked files or try to stage them when you run `git add` on them, as discussed in Chapter 2. However, if you want another file outside of your project to hold those values or have extra values, you can tell Git where that file is with the `core.excludesfile` setting. Simply set it to the path of a file that has content similar to what a `.gitignore` file would have.
 
-#### help.autocorrect ####
+#### automatyczna korekta komendy - *help.autocorrect* ####
 
 This option is available only in Git 1.6.1 and later. If you mistype a command in Git 1.6, it shows you something like this:
 
@@ -103,11 +103,11 @@ This option is available only in Git 1.6.1 and later. If you mistype a command i
 
 If you set `help.autocorrect` to 1, Git will automatically run the command if it has only one match under this scenario.
 
-### Colors in Git ###
+### Kolory w Gicie ###
 
 Git can color its output to your terminal, which can help you visually parse the output quickly and easily. A number of options can help you set the coloring to your preference.
 
-#### color.ui ####
+#### wlączanie kolorów - *color.ui* ####
 
 Git automatically colors most of its output if you ask it to. You can get very specific about what you want colored and how; but to turn on all the default terminal coloring, set `color.ui` to true:
 
@@ -117,7 +117,7 @@ When that value is set, Git colors its output if the output goes to a terminal. 
 
 You’ll rarely want `color.ui = always`. In most scenarios, if you want color codes in your redirected output, you can instead pass a `--color` flag to the Git command to force it to use color codes. The `color.ui = true` setting is almost always what you’ll want to use.
 
-#### `color.*` ####
+#### selektywne ustawienia kolorów - *`color.*`* ####
 
 If you want to be more specific about which commands are colored and how, or you have an older version, Git provides verb-specific coloring settings. Each of these can be set to `true`, `false`, or `always`:
 
@@ -134,7 +134,7 @@ You can set the color to any of the following values: normal, black, red, green,
 
 See the `git config` manpage for all the subsettings you can configure, if you want to do that.
 
-### External Merge and Diff Tools ###
+### Zewnętrze narzędzie do łączenia oraz porównywania plików ###
 
 Although Git has an internal implementation of diff, which is what you’ve been using, you can set up an external tool instead. You can also set up a graphical merge conflict–resolution tool instead of having to resolve conflicts manually. I’ll demonstrate setting up the Perforce Visual Merge Tool (P4Merge) to do your diffs and merge resolutions, because it’s a nice graphical tool and it’s free.
 
@@ -208,11 +208,11 @@ Git comes preset to use a number of other merge-resolution tools without your ha
 
 If you run this instead of setting up the `extMerge` and `extDiff` files, Git will use KDiff3 for merge resolution and the normal Git diff tool for diffs.
 
-### Formatting and Whitespace ###
+### Formatowanie oraz znaki nie drukowane ###
 
 Formatting and whitespace issues are some of the more frustrating and subtle problems that many developers encounter when collaborating, especially cross-platform. It’s very easy for patches or other collaborated work to introduce subtle whitespace changes because editors silently introduce them or Windows programmers add carriage returns at the end of lines they touch in cross-platform projects. Git has a few configuration options to help with these issues.
 
-#### core.autocrlf ####
+#### znak końca lini - *core.autocrlf* ####
 
 If you’re programming on Windows or using another system but working with people who are programming on Windows, you’ll probably run into line-ending issues at some point. This is because Windows uses both a carriage-return character and a linefeed character for newlines in its files, whereas Mac and Linux systems use only the linefeed character. This is a subtle but incredibly annoying fact of cross-platform work. 
 
@@ -230,7 +230,7 @@ If you’re a Windows programmer doing a Windows-only project, then you can turn
 
 	$ git config --global core.autocrlf false
 
-#### core.whitespace ####
+#### znaki niedrukowane - *core.whitespace* ####
 
 Git comes preset to detect and fix some whitespace issues. It can look for four primary whitespace issues — two are enabled by default and can be turned off, and two aren’t enabled by default but can be activated.
 
@@ -253,11 +253,11 @@ Or you can have Git try to automatically fix the issue before applying the patch
 
 These options apply to the git rebase option as well. If you’ve committed whitespace issues but haven’t yet pushed upstream, you can run a `rebase` with the `--whitespace=fix` option to have Git automatically fix whitespace issues as it’s rewriting the patches.
 
-### Server Configuration ###
+### Konfiguracja serwera ###
 
 Not nearly as many configuration options are available for the server side of Git, but there are a few interesting ones you may want to take note of.
 
-#### receive.fsckObjects ####
+#### walidacja obiektów - *receive.fsckObjects* ####
 
 By default, Git doesn’t check for consistency all the objects it receives during a push. Although Git can check to make sure each object still matches its SHA-1 checksum and points to valid objects, it doesn’t do that by default on every push. This is a relatively expensive operation and may add a lot of time to each push, depending on the size of the repository or the push. If you want Git to check object consistency on every push, you can force it to do so by setting `receive.fsckObjects` to true:
 
@@ -265,7 +265,7 @@ By default, Git doesn’t check for consistency all the objects it receives duri
 
 Now, Git will check the integrity of your repository before each push is accepted to make sure faulty clients aren’t introducing corrupt data.
 
-#### receive.denyNonFastForwards ####
+#### zezwalanie na nadpisywanie wcześniejszych migawek - *receive.denyNonFastForwards* ####
 
 If you rebase commits that you’ve already pushed and then try to push again, or otherwise try to push a commit to a remote branch that doesn’t contain the commit that the remote branch currently points to, you’ll be denied. This is generally good policy; but in the case of the rebase, you may determine that you know what you’re doing and can force-update the remote branch with a `-f` flag to your push command.
 
@@ -275,7 +275,7 @@ To disable the ability to force-update remote branches to non-fast-forward refer
 
 The other way you can do this is via server-side receive hooks, which I’ll cover in a bit. That approach lets you do more complex things like deny non-fast-forwards to a certain subset of users.
 
-#### receive.denyDeletes ####
+#### zezwalanie na kasowanie gałęzi, tagów - *receive.denyDeletes* ####
 
 One of the workarounds to the `denyNonFastForwards` policy is for the user to delete the branch and then push it back up with the new reference. In newer versions of Git (beginning with version 1.6.1), you can set `receive.denyDeletes` to true:
 
@@ -283,17 +283,17 @@ One of the workarounds to the `denyNonFastForwards` policy is for the user to de
 
 This denies branch and tag deletion over a push across the board — no user can do it. To remove remote branches, you must remove the ref files from the server manually. There are also more interesting ways to do this on a per-user basis via ACLs, as you’ll learn at the end of this chapter.
 
-## Git Attributes ##
+## Git - właściwości ##
 
 Some of these settings can also be specified for a path, so that Git applies those settings only for a subdirectory or subset of files. These path-specific settings are called Git attributes and are set either in a `.gitattributes` file in one of your directories (normally the root of your project) or in the `.git/info/attributes` file if you don’t want the attributes file committed with your project.
 
 Using attributes, you can do things like specify separate merge strategies for individual files or directories in your project, tell Git how to diff non-text files, or have Git filter content before you check it into or out of Git. In this section, you’ll learn about some of the attributes you can set on your paths in your Git project and see a few examples of using this feature in practice.
 
-### Binary Files ###
+### Pliki binarne ###
 
 One cool trick for which you can use Git attributes is telling Git which files are binary (in cases it otherwise may not be able to figure out) and giving Git special instructions about how to handle those files. For instance, some text files may be machine generated and not diffable, whereas some binary files can be diffed — you’ll see how to tell Git which is which.
 
-#### Identifying Binary Files ####
+#### Identyfikacja plików binarnych ####
 
 Some files look like text files but for all intents and purposes are to be treated as binary data. For instance, Xcode projects on the Mac contain a file that ends in `.pbxproj`, which is basically a JSON (plain text javascript data format) dataset written out to disk by the IDE that records your build settings and so on. Although it’s technically a text file, because it’s all ASCII, you don’t want to treat it as such because it’s really a lightweight database — you can’t merge the contents if two people changed it, and diffs generally aren’t helpful. The file is meant to be consumed by a machine. In essence, you want to treat it like a binary file.
 
@@ -305,7 +305,7 @@ Now, Git won’t try to convert or fix CRLF issues; nor will it try to compute o
 
 	*.pbxproj binary
 
-#### Diffing Binary Files ####
+#### Przeglądanie różnic binarnych plików ####
 
 In the 1.6 series of Git, you can use the Git attributes functionality to effectively diff binary files. You do this by telling Git how to convert your binary data to a text format that can be compared via the normal diff.
 
@@ -371,7 +371,7 @@ If you replace an image in your project and run `git diff`, you see something li
 
 You can easily see that the file size and image dimensions have both changed.
 
-### Keyword Expansion ###
+### Kluczowe rozszeżenia ###
 
 SVN- or CVS-style keyword expansion is often requested by developers used to those systems. The main problem with this in Git is that you can’t modify a file with information about the commit after you’ve committed, because Git checksums the file first. However, you can inject text into a file when it’s checked out and remove it again before it’s added to a commit. Git attributes offers you two ways to do this.
 
@@ -436,11 +436,11 @@ If you commit those changes and check out the file again, you see the keyword pr
 
 You can see how powerful this technique can be for customized applications. You have to be careful, though, because the `.gitattributes` file is committed and passed around with the project but the driver (in this case, `dater`) isn’t; so, it won’t work everywhere. When you design these filters, they should be able to fail gracefully and have the project still work properly.
 
-### Exporting Your Repository ###
+### Eksportowanie repozytorium ###
 
 Git attribute data also allows you to do some interesting things when exporting an archive of your project.
 
-#### export-ignore ####
+#### ignorowanie plików - *export-ignore* ####
 
 You can tell Git not to export certain files or directories when generating an archive. If there is a subdirectory or file that you don’t want to include in your archive file but that you do want checked into your project, you can determine those files via the `export-ignore` attribute.
 
@@ -450,7 +450,7 @@ For example, say you have some test files in a `test/` subdirectory, and it does
 
 Now, when you run git archive to create a tarball of your project, that directory won’t be included in the archive.
 
-#### export-subst ####
+#### dodatkowe informacje - export-subst ####
 
 Another thing you can do for your archives is some simple keyword substitution. Git lets you put the string `$Format:$` in any file with any of the `--pretty=format` formatting shortcodes, many of which you saw in Chapter 2. For instance, if you want to include a file named `LAST_COMMIT` in your project, and the last commit date was automatically injected into it when `git archive` ran, you can set up the file like this:
 
@@ -464,7 +464,7 @@ When you run `git archive`, the contents of that file when people open the archi
 	$ cat LAST_COMMIT
 	Last commit date: $Format:Tue Apr 21 08:38:48 2009 -0700$
 
-### Merge Strategies ###
+### Strategie łączenia ###
 
 You can also use Git attributes to tell Git to use different merge strategies for specific files in your project. One very useful option is to tell Git to not try to merge specific files when they have conflicts, but rather to use your side of the merge over someone else’s.
 
@@ -480,21 +480,21 @@ If you merge in the other branch, instead of having merge conflicts with the dat
 
 In this case, database.xml stays at whatever version you originally had.
 
-## Git Hooks ##
+## Metody użytwkonika w Gicie ##
 
 Like many other Version Control Systems, Git has a way to fire off custom scripts when certain important actions occur. There are two groups of these hooks: client side and server side. The client-side hooks are for client operations such as committing and merging. The server-side hooks are for Git server operations such as receiving pushed commits. You can use these hooks for all sorts of reasons, and you’ll learn about a few of them here.
 
-### Installing a Hook ###
+### Dodawanie metod ###
 
 The hooks are all stored in the `hooks` subdirectory of the Git directory. In most projects, that’s `.git/hooks`. By default, Git populates this directory with a bunch of example scripts, many of which are useful by themselves; but they also document the input values of each script. All the examples are written as shell scripts, with some Perl thrown in, but any properly named executable scripts will work fine — you can write them in Ruby or Python or what have you. For post-1.6 versions of Git, these example hook files end with .sample; you’ll need to rename them. For pre-1.6 versions of Git, the example files are named properly but are not executable.
 
 To enable a hook script, put a file in the `hooks` subdirectory of your Git directory that is named appropriately and is executable. From that point forward, it should be called. I’ll cover most of the major hook filenames here.
 
-### Client-Side Hooks ###
+### Metody po stronie klienta ###
 
 There are a lot of client-side hooks. This section splits them into committing-workflow hooks, e-mail–workflow scripts, and the rest of the client-side scripts.
 
-#### Committing-Workflow Hooks ####
+#### Metody związanae z zatwierdzaniem zmian oraz cyklu pracy ####
 
 The first four hooks have to do with the committing process. The `pre-commit` hook is run first, before you even type in a commit message. It’s used to inspect the snapshot that’s about to be committed, to see if you’ve forgotten something, to make sure tests run, or to examine whatever you need to inspect in the code. Exiting non-zero from this hook aborts the commit, although you can bypass it with `git commit --no-verify`. You can do things like check for code style (run lint or something equivalent), check for trailing whitespace (the default hook does exactly that), or check for appropriate documentation on new methods.
 
@@ -506,7 +506,7 @@ After the entire commit process is completed, the `post-commit` hook runs. It do
 
 The committing-workflow client-side scripts can be used in just about any workflow. They’re often used to enforce certain policies, although it’s important to note that these scripts aren’t transferred during a clone. You can enforce policy on the server side to reject pushes of commits that don’t conform to some policy, but it’s entirely up to the developer to use these scripts on the client side. So, these are scripts to help developers, and they must be set up and maintained by them, although they can be overridden or modified by them at any time.
 
-#### E-mail Workflow Hooks ####
+#### Metody związane z cyklem pracy nakładania łatek za pomocą komendy *am* ####
 
 You can set up three client-side hooks for an e-mail–based workflow. They’re all invoked by the `git am` command, so if you aren’t using that command in your workflow, you can safely skip to the next section. If you’re taking patches over e-mail prepared by `git format-patch`, then some of these may be helpful to you.
 
@@ -516,7 +516,7 @@ The next hook to run when applying patches via `git am` is `pre-applypatch`. It 
 
 The last hook to run during a `git am` operation is `post-applypatch`. You can use it to notify a group or the author of the patch you pulled in that you’ve done so. You can’t stop the patching process with this script.
 
-#### Other Client Hooks ####
+#### Pozostałe metody po stronie klienta ####
 
 The `pre-rebase` hook runs before you rebase anything and can halt the process by exiting non-zero. You can use this hook to disallow rebasing any commits that have already been pushed. The example `pre-rebase` hook that Git installs does this, although it assumes that next is the name of the branch you publish. You’ll likely need to change that to whatever your stable, published branch is.
 
@@ -524,27 +524,27 @@ After you run a successful `git checkout`, the `post-checkout` hook runs; you ca
 
 Finally, the `post-merge` hook runs after a successful `merge` command. You can use it to restore data in the working tree that Git can’t track, such as permissions data. This hook can likewise validate the presence of files external to Git control that you may want copied in when the working tree changes.
 
-### Server-Side Hooks ###
+### Metody po stronie servera ###
 
 In addition to the client-side hooks, you can use a couple of important server-side hooks as a system administrator to enforce nearly any kind of policy for your project. These scripts run before and after pushes to the server. The pre hooks can exit non-zero at any time to reject the push as well as print an error message back to the client; you can set up a push policy that’s as complex as you wish.
 
-#### pre-receive and post-receive ####
+#### przed otrzymanie i po otrzymaniu ####
 
 The first script to run when handling a push from a client is `pre-receive`. It takes a list of references that are being pushed from stdin; if it exits non-zero, none of them are accepted. You can use this hook to do things like make sure none of the updated references are non-fast-forwards; or to check that the user doing the pushing has create, delete, or push access or access to push updates to all the files they’re modifying with the push.
 
 The `post-receive` hook runs after the entire process is completed and can be used to update other services or notify users. It takes the same stdin data as the `pre-receive` hook. Examples include e-mailing a list, notifying a continuous integration server, or updating a ticket-tracking system — you can even parse the commit messages to see if any tickets need to be opened, modified, or closed. This script can’t stop the push process, but the client doesn’t disconnect until it has completed; so, be careful when you try to do anything that may take a long time.
 
-#### update ####
+#### aktualizacja ####
 
 The update script is very similar to the `pre-receive` script, except that it’s run once for each branch the pusher is trying to update. If the pusher is trying to push to multiple branches, `pre-receive` runs only once, whereas update runs once per branch they’re pushing to. Instead of reading from stdin, this script takes three arguments: the name of the reference (branch), the SHA-1 that reference pointed to before the push, and the SHA-1 the user is trying to push. If the update script exits non-zero, only that reference is rejected; other references can still be updated.
 
-## An Example Git-Enforced Policy ##
+## Przykład polityki wymuszania zachowań przez git'a ##
 
 In this section, you’ll use what you’ve learned to establish a Git workflow that checks for a custom commit message format, enforces fast-forward-only pushes, and allows only certain users to modify certain subdirectories in a project. You’ll build client scripts that help the developer know if their push will be rejected and server scripts that actually enforce the policies.
 
 I used Ruby to write these, both because it’s my preferred scripting language and because I feel it’s the most pseudocode-looking of the scripting languages; thus you should be able to roughly follow the code even if you don’t use Ruby. However, any language will work fine. All the sample hook scripts distributed with Git are in either Perl or Bash scripting, so you can also see plenty of examples of hooks in those languages by looking at the samples.
 
-### Server-Side Hook ###
+### Po stronie serwera ###
 
 All the server-side work will go into the update file in your hooks directory. The update file runs once per branch being pushed and takes the reference being pushed to, the old revision where that branch was, and the new revision being pushed. You also have access to the user doing the pushing if the push is being run over SSH. If you’ve allowed everyone to connect with a single user (like "git") via public-key authentication, you may have to give that user a shell wrapper that determines which user is connecting based on the public key, and set an environment variable specifying that user. Here I assume the connecting user is in the `$USER` environment variable, so your update script begins by gathering all the information you need:
 
@@ -559,7 +559,7 @@ All the server-side work will go into the update file in your hooks directory. T
 
 Yes, I’m using global variables. Don’t judge me — it’s easier to demonstrate in this manner.
 
-#### Enforcing a Specific Commit-Message Format ####
+#### Wymuszanie ustalonego formatu komentarzy ####
 
 Your first challenge is to enforce that each commit message must adhere to a particular format. Just to have a target, assume that each message has to include a string that looks like "ref: 1234" because you want each commit to link to a work item in your ticketing system. You must look at each commit being pushed up, see if that string is in the commit message, and, if the string is absent from any of the commits, exit non-zero so the push is rejected.
 
@@ -608,7 +608,7 @@ You can use that incantation to grab the commit message from each commit that is
 
 Putting that in your `update` script will reject updates that contain commits that have messages that don’t adhere to your rule.
 
-#### Enforcing a User-Based ACL System ####
+#### Kontrolowanie dostępu za pomocą list ACL ####
 
 Suppose you want to add a mechanism that uses an access control list (ACL) that specifies which users are allowed to push changes to which parts of your projects. Some people have full access, and others only have access to push changes to certain subdirectories or specific files. To enforce this, you’ll write those rules to a file named `acl` that lives in your bare Git repository on the server. You’ll have the `update` hook look at those rules, see what files are being introduced for all the commits being pushed, and determine whether the user doing the push has access to update all those files.
 
@@ -691,7 +691,7 @@ Most of that should be easy to follow. You get a list of new commits being pushe
 
 Now your users can’t push any commits with badly formed messages or with modified files outside of their designated paths.
 
-#### Enforcing Fast-Forward-Only Pushes ####
+#### Pozwalania tylko nie nadpisującym wchodzeniu zmian ####
 
 The only thing left is to enforce fast-forward-only pushes. In Git versions 1.6 or newer, you can set the `receive.denyDeletes` and `receive.denyNonFastForwards` settings. But enforcing this with a hook will work in older versions of Git, and you can modify it to do so only for certain users or whatever else you come up with later.
 
@@ -757,7 +757,7 @@ Or if someone tries to edit a file they don’t have access to and push a commit
 
 That’s all. From now on, as long as that `update` script is there and executable, your repository will never be rewound and will never have a commit message without your pattern in it, and your users will be sandboxed.
 
-### Client-Side Hooks ###
+### Po stronie klienta ###
 
 The downside to this approach is the whining that will inevitably result when your users’ commit pushes are rejected. Having their carefully crafted work rejected at the last minute can be extremely frustrating and confusing; and furthermore, they will have to edit their history to correct it, which isn’t always for the faint of heart.
 
@@ -870,6 +870,6 @@ The `SHA^@` syntax resolves to all the parents of that commit. You’re looking 
 
 The main drawback to this approach is that it can be very slow and is often unnecessary — if you don’t try to force the push with `-f`, the server will warn you and not accept the push. However, it’s an interesting exercise and can in theory help you avoid a rebase that you might later have to go back and fix.
 
-## Summary ##
+## Podsumowanie ##
 
 You’ve covered most of the major ways that you can customize your Git client and server to best fit your workflow and projects. You’ve learned about all sorts of configuration settings, file-based attributes, and event hooks, and you’ve built an example policy-enforcing server. You should now be able to make Git fit nearly any workflow you can dream up.
