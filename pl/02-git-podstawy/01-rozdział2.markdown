@@ -766,7 +766,7 @@ Now you can use the string pb on the command line in lieu of the whole URL. For 
 
 Paul’s master branch is accessible locally as `pb/master` — you can merge it into one of your branches, or you can check out a local branch at that point if you want to inspect it.
 
-### Pobieranie oraz ciągnięcie ze zdalnego repozytorium ###
+### Pobieranie oraz wciąganie ze zdalnego repozytorium ###
 
 As you just saw, to get data from your remote projects, you can run:
 
