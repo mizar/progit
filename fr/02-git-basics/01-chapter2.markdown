@@ -1,60 +1,42 @@
-# Základy Gitu #
+# Git Basics #
 
-Pokud máte čas si přečíst jen jednu kapitolu, přečtěte si tuto. Pokrývá všechny základní příkazy,
-které potřebujete k naprosté většině činností, které kdy budete s Gitem dělat. Naučíte se konfigurovat a inicializovat repozitář,
-přidávat a odebírat sledované soubory a ukládat změny. Také donutíme Git ignorovat některé soubory; zjistíme, jak rychle a jednoduše opravovat chyby,
-prohlížet historii a změny mezi jednotlivými commity a synchronizovat se vzdálenými repozitáři.
+If you can read only one chapter to get going with Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you’ll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We’ll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
 
-## Jak získat repozitář Gitu ##
+## Getting a Git Repository ##
 
-Jsou dva základní způsoby, jak získat projekt v Gitu. První vezme existující projekt nebo adresář a importuje ho do Gitu.
-Druhý naklonuje existující repozitář z jiného serveru.
+You can get a Git project using two main approaches. The first takes an existing project or directory and imports it into Git. The second clones an existing Git repository from another server.
 
-### Inicializace repozitáře z existujícího adresáře ###
+### Initializing a Repository in an Existing Directory ###
 
-Pokud chcete začít spravovat projekt Gitem, vstoupíte do jeho adresáře a spustíte
+If you’re starting to track an existing project in Git, you need to go to the project’s directory and type
 
 	$ git init
 
-To vytvoří podadresář .git, který obsahuje všechno, co Git potřebuje pro tento projekt, jakousi kostru. Ovšem zatím je prázdný, nic nesleduje.
-(V kapitole 9 si podrobněji rozebereme, co tento příkaz vlastně vytvořil.)
+This creates a new subdirectory named .git that contains all of your necessary repository files — a Git repository skeleton. At this point, nothing in your project is tracked yet. (See Chapter 9 for more information about exactly what files are contained in the `.git` directory you just created.)
 
-Pokud chcete spravovat již existující soubory (pokud zrovna nezačínáte od píky a nemáte úplně prázdný adresář), asi je budete chtít začít sledovat
-a provést první commit. To zařídíte spuštěním několika příkazů, kterými určíte, co sledovat, načež to shrnete do commitu:
+If you want to start version-controlling existing files (as opposed to an empty directory), you should probably begin tracking those files and do an initial commit. You can accomplish that with a few git add commands that specify the files you want to track, followed by a commit:
 
 	$ git add *.c
 	$ git add README
 	$ git commit –m 'initial project version'
 
-Pozn. překl.: Bývá zvykem, že popisky commitů (initial project version aj.) jsou psány v angličtině, není-li explicitně řečeno jinak;
-české popisky mívají opodstatnění jen u ryze českých, resp. československých projektů, kde se nepočítá s tím, že by se na nich podílel
-někdo, pro koho je čeština nesrozumitelným jazykem.
+We’ll go over what these commands do in just a minute. At this point, you have a Git repository with tracked files and an initial commit.
 
-Za chvilku si projdeme, co tyto příkazy vlastně dělají. V tuto chvíli máte repozitář se sledovanými soubory a prvním commitem.
+### Cloning an Existing Repository ###
 
-### Klonování stávajícího repozitáře ###
+If you want to get a copy of an existing Git repository — for example, a project you’d like to contribute to — the command you need is git clone. If you’re familiar with other VCS systems such as Subversion, you’ll notice that the command is clone and not checkout. This is an important distinction — Git receives a copy of nearly all data that the server has. Every version of every file for the history of the project is pulled down when you run `git clone`. In fact, if your server disk gets corrupted, you can use any of the clones on any client to set the server back to the state it was in when it was cloned (you may lose some server-side hooks and such, but all the versioned data would be there—see Chapter 4 for more details).
 
-Pokud chcete mít kopii již existujícího repozitáře -- např. projektu, na kterém se chcete podílet -- příkaz, který potřebujete, je `git clone`.
-Když máte zkušenosti s jinými SSV jako Subversion, povšimnete si, že použitý příkaz je `clone` a nikoli `checkout`. To je důležitý rozdíl.
-Git totiž dostane téměř kompletní kopii toho, co server zrovna má. Každou verzi každého souboru z minulosti.
-Tedy, pokud se vám na serveru porouchá disk, stačí zpět naklonovat repozitář jakéhokoli klienta a máte přesně takový stav, jaký byl na serveru
-v době, kdy ho on naposledy aktualizoval. Možná ztratíte nějaká specifická serverová nastavení, ale každopádně to cenné -- spravovaná data -- máte
-v bezpečí.
-
-Repozitář naklonujete příkazem `git clone [url]`. Např. pro naklonování knihovny Gitu pro Ruby (Grit) provedete tento příkaz:
+You clone a repository with `git clone [url]`. For example, if you want to clone the Ruby Git library called Grit, you can do so like this:
 
 	$ git clone git://github.com/schacon/grit.git
 
-Ten vytvoří adresář "grit", v něm adresář `.git`, stáhne všechna data repozitáře a rozbalí aktuální verzi. Pokud vstoupíte do tohoto nového
-adresáře, najdete v něm všechny soubory projektu připravené k práci nebo použití.
-Když chcete naklonovat repozitář někam jinam než do složky "grit", můžete mu to říct takto:
+That creates a directory named "grit", initializes a `.git` directory inside it, pulls down all the data for that repository, and checks out a working copy of the latest version. If you go into the new `grit` directory, you’ll see the project files in there, ready to be worked on or used. If you want to clone the repository into a directory named something other than grit, you can specify that as the next command-line option:
 
 	$ git clone git://github.com/schacon/grit.git mygrit
 
-Tak provedete všechno, co udělal minulý příkaz, ale do adresáře `mygrit`.
+That command does the same thing as the previous one, but the target directory is called mygrit.
 
-Git podporuje více různých přenosových protokolů. Předchozí příklad používá protokol `git://`, ale také můžete použít `http(s)://`
-nebo `uživatel@server:/cesta.git`, což použije SSH. Všechny možnosti včetně jejich pro a proti si ukážeme v kapitole 4.
+Git has a number of different transfer protocols you can use. The previous example uses the `git://` protocol, but you may also see `http(s)://` or `user@server:/path.git`, which uses the SSH transfer protocol. Chapter 4 will introduce all of the available options the server can set up to access your Git repository and the pros and cons of each.
 
 ## Recording Changes to the Repository ##
 
@@ -65,7 +47,7 @@ Remember that each file in your working directory can be in one of two states: t
 As you edit files, Git sees them as modified, because you’ve changed them since your last commit. You stage these modified files and then commit all your staged changes, and the cycle repeats. This lifecycle is illustrated in Figure 2-1.
 
 Insert 18333fig0201.png 
-Figure 2-1. The lifecycle of the status of your files
+Figure 2-1. The lifecycle of the status of your files.
 
 ### Checking the Status of Your Files ###
 
@@ -637,7 +619,7 @@ Of the nearly 20,000 commits in the Git source code history, this command shows 
 If you like to use a more graphical tool to visualize your commit history, you may want to take a look at a Tcl/Tk program called gitk that is distributed with Git. Gitk is basically a visual `git log` tool, and it accepts nearly all the filtering options that `git log` does. If you type gitk on the command line in your project, you should see something like Figure 2-2.
 
 Insert 18333fig0202.png 
-Figure 2-2. The gitk history visualizer
+Figure 2-2. The gitk history visualizer.
 
 You can see the commit history in the top half of the window along with a nice ancestry graph. The diff viewer in the bottom half of the window shows you the changes introduced at any commit you click.
 
@@ -661,7 +643,7 @@ As an example, if you commit and then realize you forgot to stage the changes in
 	$ git add forgotten_file
 	$ git commit --amend 
 
-All three of these commands end up with a single commit — the second command replaces the results of the first.
+All three of these commands end up with a single commit — the second commit replaces the results of the first.
 
 ### Unstaging a Staged File ###
 
@@ -786,13 +768,13 @@ Paul’s master branch is accessible locally as `pb/master` — you can merge it
 
 ### Fetching and Pulling from Your Remotes ###
 
-As you just saw, to get data from your remote projects, you can run
+As you just saw, to get data from your remote projects, you can run:
 
 	$ git fetch [remote-name]
 
 The command goes out to that remote project and pulls down all the data from that remote project that you don’t have yet. After you do this, you should have references to all the branches from that remote, which you can merge in or inspect at any time. (We’ll go over what branches are and how to use them in much more detail in Chapter 3.)
 
-If you cloned a repository, the command automatically adds that remote repository under the name origin. So, `git fetch origin` fetches any new work that has been pushed to that server since you cloned (or last fetched from) it. It’s important to note that the fetch command pulls the data to your local repository — it doesn’t automatically merge it with any of your work or modify what you’re currently working on. You have to merge it manually into your work when you’re ready.
+If you clone a repository, the command automatically adds that remote repository under the name origin. So, `git fetch origin` fetches any new work that has been pushed to that server since you cloned (or last fetched from) it. It’s important to note that the fetch command pulls the data to your local repository — it doesn’t automatically merge it with any of your work or modify what you’re currently working on. You have to merge it manually into your work when you’re ready.
 
 If you have a branch set up to track a remote branch (see the next section and Chapter 3 for more information), you can use the `git pull` command to automatically fetch and then merge a remote branch into your current branch. This may be an easier or more comfortable workflow for you; and by default, the `git clone` command automatically sets up your local master branch to track the remote master branch on the server you cloned from (assuming the remote has a master branch). Running `git pull` generally fetches data from the server you originally cloned from and automatically tries to merge it into the code you’re currently working on.
 
