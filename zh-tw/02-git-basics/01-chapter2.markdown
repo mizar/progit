@@ -564,16 +564,16 @@ Insert 18333fig0201.png
 
 以上只是簡單介紹了一些 `git log` 命令支持的選項。表 2-2 還列出了一些其他常用的選項及其釋義。
 
-	選項 說明
-	-p 按補丁格式顯示每個更新之間的差異。
-	--stat 顯示每次更新的文件修改統計信息。
-	--shortstat 只顯示 --stat 中最後的行數修改添加移除統計。
-	--name-only 僅在提交信息後顯示已修改的文件清單。
-	--name-status 顯示新增、修改、刪除的文件清單。
-	--abbrev-commit 僅顯示 SHA-1 的前幾個字符，而非所有的 40 個字符。
-	--relative-date 使用較短的相對時間顯示（比如，「2 weeks ago」）。
-	--graph 顯示 ASCII 圖形表示的分支合併歷史。
-	--pretty 使用其他格式顯示歷史提交信息。可用的選項包括 oneline，short，full，fuller 和 format（後跟指定格式）。
+	選項	說明
+	-p	按補丁格式顯示每個更新之間的差異。
+	--stat	顯示每次更新的文件修改統計信息。
+	--shortstat	只顯示 --stat 中最後的行數修改添加移除統計。
+	--name-only	僅在提交信息後顯示已修改的文件清單。
+	--name-status	顯示新增、修改、刪除的文件清單。
+	--abbrev-commit	僅顯示 SHA-1 的前幾個字符，而非所有的 40 個字符。
+	--relative-date	使用較短的相對時間顯示（比如，「2 weeks ago」）。
+	--graph	顯示 ASCII 圖形表示的分支合併歷史。
+	--pretty	使用其他格式顯示歷史提交信息。可用的選項包括 oneline，short，full，fuller 和 format（後跟指定格式）。
 
 ### 限制輸出長度 ###
 
@@ -591,12 +591,12 @@ Insert 18333fig0201.png
 
 表 2-3 還列出了其他常用的類似選項。
 
-	選項 說明
+	選項	說明
 	-(n)	僅顯示最近的 n 條提交
-	--since, --after 僅顯示指定時間之後的提交。
-	--until, --before 僅顯示指定時間之前的提交。
-	--author 僅顯示指定作者相關的提交。
-	--committer 僅顯示指定提交者相關的提交。
+	--since, --after	僅顯示指定時間之後的提交。
+	--until, --before	僅顯示指定時間之前的提交。
+	--author	僅顯示指定作者相關的提交。
+	--committer	僅顯示指定提交者相關的提交。
 
 來看一個實際的例子，如果要查看 Git 倉庫中，2008 年 10 月期間，Junio Hamano 提交的但未合併的測試腳本（位於項目的 t/ 目錄下的文件），可以用下面的查詢命令：
 
