@@ -568,14 +568,13 @@ Git属性在导出项目归档时也能发挥作用。
 除了客户端挂钩，作为系统管理员，你还可以使用两个服务器端的挂钩对项目实施各种类型的策略。这些挂钩脚本可以在提交对象推送到服务器前被调用，也可以在推送到服务器后被调用。推送到服务器前调用的挂钩可以在任何时候以非零退出，拒绝推送，返回错误消息给客户端，还可以如你所愿设置足够复杂的推送策略。
 
 #### pre-receive和post-receive #### 
+处理客户端的push请求时首先运行的钩子就是`pre-receive`。 它从标准输入查看发送来的很多引用；如果它返回非零，Git就会被拒绝此次push。例如你可以用这个钩子来踢掉所有 non-fast-forwards 更新；或者确保推送者有权限更新访问本次推送所改动的文件。
 
-The first script to run when handling a push from a client is `pre-receive`. It takes a list of references that are being pushed from stdin; if it exits non-zero, none of them are accepted. You can use this hook to do things like make sure none of the updated references are non-fast-forwards; or to check that the user doing the pushing has create, delete, or push access or access to push updates to all the files they’re modifying with the push.
-
-The `post-receive` hook runs after the entire process is completed and can be used to update other services or notify users. It takes the same stdin data as the `pre-receive` hook. Examples include e-mailing a list, notifying a continuous integration server, or updating a ticket-tracking system — you can even parse the commit messages to see if any tickets need to be opened, modified, or closed. This script can’t stop the push process, but the client doesn’t disconnect until it has completed; so, be careful when you try to do anything that may take a long time.
+钩子 `post-receive` 在整个push过程结束的时候被调用, 一般可以用来更新别的仓库或者通知成员。它从标准输入接收和 `pre-receive` 数据。比如可以邮件一个列表，通知 a continuous integration server, or updating a ticket-tracking system — you can even parse the commit messages to see if any tickets need to be opened, modified, or closed. 该脚本已经无法阻止push了，但是用户直到脚本运行结束才能断开连接；所以小心需求用很多时间的处理。
 
 #### update ####
 
-The update script is very similar to the `pre-receive` script, except that it’s run once for each branch the pusher is trying to update. If the pusher is trying to push to multiple branches, `pre-receive` runs only once, whereas update runs once per branch they’re pushing to. Instead of reading from stdin, this script takes three arguments: the name of the reference (branch), the SHA-1 that reference pointed to before the push, and the SHA-1 the user is trying to push. If the update script exits non-zero, only that reference is rejected; other references can still be updated.
+ `update` 和 `pre-receive` 非常相像, 但是它只在新的分支被推上来的时候运行一次。 如果推送者要push到多个分支， `pre-receive` 只运行一次，而这个脚本会为每个推送过来的分支运行一次。该脚本不接受标准输入，而是接受3个参数：分支的名字、push前分支的 SHA-1 值、该push的 SHA-1 值。如果脚本不以0退出，就只有那个分支被拒绝，别的分支则接受。
 
 ## An Example Git-Enforced Policy ##
 
@@ -596,7 +595,7 @@ All the server-side work will go into the update file in your hooks directory. T
 
 	puts "Enforcing Policies... \n(#{$refname}) (#{$oldrev[0,6]}) (#{$newrev[0,6]})"
 
-Yes, I’m using global variables. Don’t judge me — it’s easier to demonstrate in this manner.
+没错偶就在用全局变量。但是表喷偶先————这只是为了好举例说明。
 
 #### Enforcing a Specific Commit-Message Format ####
 
@@ -647,9 +646,9 @@ You can use that incantation to grab the commit message from each commit that is
 
 Putting that in your `update` script will reject updates that contain commits that have messages that don’t adhere to your rule.
 
-#### Enforcing a User-Based ACL System ####
+#### 施行基于用户的访问控制 ####
 
-Suppose you want to add a mechanism that uses an access control list (ACL) that specifies which users are allowed to push changes to which parts of your projects. Some people have full access, and others only have access to push changes to certain subdirectories or specific files. To enforce this, you’ll write those rules to a file named `acl` that lives in your bare Git repository on the server. You’ll have the `update` hook look at those rules, see what files are being introduced for all the commits being pushed, and determine whether the user doing the push has access to update all those files.
+设想你打算用访问控制(ACL)来管理谁对整个项目的某些部分有push权限。一些人有全权，一些人就只能push特定的子目录或文件。To enforce this, you’ll write those rules to a file named `acl` that lives in your bare Git repository on the server. You’ll have the `update` hook look at those rules, see what files are being introduced for all the commits being pushed, and determine whether the user doing the push has access to update all those files.
 
 The first thing you’ll do is write your ACL. Here you’ll use a format very much like the CVS ACL mechanism: it uses a series of lines, where the first field is `avail` or `unavail`, the next field is a comma-delimited list of the users to which the rule applies, and the last field is the path to which the rule applies (blank meaning open access). All of these fields are delimited by a pipe (`|`) character.
 
