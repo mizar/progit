@@ -1,3 +1,5 @@
+[mholtmanns - 2010-01-14] Generelle Frage: Soll der Text in der "Du" Form sein/bleiben, oder soll es einen etwas seriöseren Charakter bekommen, als "Sie" oder "Wir"/neutrale Form ("Wie wir gesehen haben ..." und "Der Benutzer kann dann ...")?
+
 "unter Versionskontrolle" » "versioniert"
 "für einen Commit markiert" » "für einen Commit vorgemerkt" / "vorgesehen"
 
@@ -53,14 +55,16 @@ snapshot - Snapshot
 	Schnappschuß klingt blöd 
 	Speicherauszug sagt Leo http://dict.leo.org/ende?search=Snapshot
 online/offline - online/offline
-hooks ("you may lose some server-side hooks") - ???
+hooks ("you may lose some server-side hooks") - "... könnten Sie den Zugriff auf einige Server Schnittstellen verlieren"
 to track a file - Änderungen an einer Datei nachverfolgen, eine Datei versionieren
 a tracked file - eine versionierte Datei, eine Datei unter Versionskontrolle, eine Datei deren Änderungen nachverfolgt werden
 a tracking branch - Tracking Branch, ein Branch, der einem externen Branch folgt ???
 tracking branch information - Tracking Branch Information
-lightweight Tag - leichter Tag (???), schlanker Tag (???)
+
+Tag - Markierung oder Marke
+lightweight Tag - leichter Tag (???), schlanker Tag (???), schwache Markierung, einfache Markierung
 annotated Tag - kommentierter Tag (???), annotierter Tag (???)
-tagged - getagged (???)
+tagged - getagged (???), markiert
 home directory - Home Verzeichnis (???)
 killer feature - "Killer Feature" (???)
 to fork - forken

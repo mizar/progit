@@ -1,15 +1,25 @@
 # Customizing Git #
+# Git Personalisieren #
+
+Ich habe nun die grundlegende Funktionsweise und die Benutzung von Git besprochen. Weiterhin habe ich einige Werkzeuge von Git eingefuehrt, die dem Benutzer ein einfaches und effizientes Arbeiten erlauben sollen. In diesem Kapitel werde ich nun auf einige Operationen eingehen, die Du benutzen kannst, um die Funktionsweise von Git Deinen persönlichen Beduerfnissen anzupassen. Dazu fuhre ich einige wichtige Konfigurationseinstellungen ein, sowie das Schnittstellen-System, auch Hooks genannt. Mit diesen Mitteln ist es einfach Git so anzupassen, dass es genau den Anspruechen des Benutzers, des Unternehmens oder des Teams entspricht.
 
 So far, I’ve covered the basics of how Git works and how to use it, and I’ve introduced a number of tools that Git provides to help you use it easily and efficiently. In this chapter, I’ll go through some operations that you can use to make Git operate in a more customized fashion by introducing several important configuration settings and the hooks system. With these tools, it’s easy to get Git to work exactly the way you, your company, or your group needs it to.
 
 ## Git Configuration ##
+## Git Konfiguration ##
+
+Wie Du in Kapitel 1 kurz gesehen hast, kann man die Konfiguration von Git mit dem Befehl `git config` steuern. Eine Deiner ersten Aktionen war es, Deinen Namen und Deine e-mail Adresse anzugeben:
 
 As you briefly saw in the Chapter 1, you can specify Git configuration settings with the `git config` command. One of the first things you did was set up your name and e-mail address:
 
 	$ git config --global user.name "John Doe"
 	$ git config --global user.email johndoe@example.com
 
+Jetzt wirst Du einige weitere, interessantere Optionen lernen, die Du so benutzen kannst, um Git Deiner Arbeitsweise anzupassen.
+
 Now you’ll learn a few of the more interesting options that you can set in this manner to customize your Git usage.
+
+In Kapitel 1 hast Du bereits einige einfache Konfigurationsdetails von Git kennengelernt, aber ich möchte sie hier noch einmal schnell wiederholen. Git benutzt eine Reihe von Konfigurationsdateien, um nicht-Standard Verhalten zu kontrollieren, an dem Du interessiert sein könntest. Der erste Ort, an dem Git danach sucht ist in der Datei `/etc/gitconfig`. Diese Datei enthält Werte fuer alle Benutzer des Systems und alle ihre Repositories. Wenn Du `git config` mit der Option `--system` benutzt, liest und schreibt Git speziell in dieser Datei.
 
 You saw some simple Git configuration details in the first chapter, but I’ll go over them again quickly here. Git uses a series of configuration files to determine non-default behavior that you may want. The first place Git looks for these values is in an `/etc/gitconfig` file, which contains values for every user on the system and all of their repositories. If you pass the option `--system` to `git config`, it reads and writes from this file specifically. 
 
