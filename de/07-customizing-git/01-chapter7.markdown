@@ -15,7 +15,7 @@ As you briefly saw in the Chapter 1, you can specify Git configuration settings 
 	$ git config --global user.name "John Doe"
 	$ git config --global user.email johndoe@example.com
 
-Jetzt wirst Du einige weitere, interessantere Optionen lernen, die Du so benutzen kannst, um Git Deiner Arbeitsweise anzupassen.
+Jetzt wirst Du einige weitere, interessantere Optionen lernen, die Du genauso benutzen kannst, um Git Deiner Arbeitsumgebung anzupassen.
 
 Now you’ll learn a few of the more interesting options that you can set in this manner to customize your Git usage.
 
@@ -23,11 +23,18 @@ In Kapitel 1 hast Du bereits einige einfache Konfigurationsdetails von Git kenne
 
 You saw some simple Git configuration details in the first chapter, but I’ll go over them again quickly here. Git uses a series of configuration files to determine non-default behavior that you may want. The first place Git looks for these values is in an `/etc/gitconfig` file, which contains values for every user on the system and all of their repositories. If you pass the option `--system` to `git config`, it reads and writes from this file specifically. 
 
+Als nächstes such Git in der benutzerspezifischen Datei `~/.gitconfig` nach Kofigurationsdaten. Damit Git diese Date zum Lesen und Schreiben nutzt, kannst Du die Option `--global` benutzen.
+
 The next place Git looks is the `~/.gitconfig` file, which is specific to each user. You can make Git read and write to this file by passing the `--global` option. 
+
+Als letztes sucht Git in der Konfigurationsdatei im Git Verzeichnis (`.git/config`) des aktuell benutzten Repositories nach Konfigurationsdaten. Diese Daten sind dann speziell fuer dieses Repository gueltig. Jede der erwähnten Ebenen ueberschreibt die vorhergehende, das heisst also das zum Beispiel die Konfiguration aus `.git/config` Vorrang vor derjenigen aus `/etc/gitconfig` hat. Du kannst alle Konfigurationen auch surch manuelles Editieren dieser Dateien mit der korrekten Syntax vornehmen, aber in der Regel ist es einfacher den Befehl `git config` zu benutzen.
 
 Finally, Git looks for configuration values in the config file in the Git directory (`.git/config`) of whatever repository you’re currently using. These values are specific to that single repository. Each level overwrites values in the previous level, so values in `.git/config` trump those in `/etc/gitconfig`, for instance. You can also set these values by manually editing the file and inserting the correct syntax, but it’s generally easier to run the `git config` command.
 
 ### Basic Client Configuration ###
+### Grundlegende Client Konfiguration ###
+
+Die von Git verwendeten Konfigurationsoptionen teilen sich in zwei Kategorien: den Client und den Server. Der Grossteil der Optionen beziehen sich auf den Client — zur Konfiguration Deines persönlichen Arbeitsflusses. Auch wenn es tonnenweise Optionen gibt werde ich nur die wenigen besprechen, die sehr gebräuchlich sind oder die Deine Arbeitsweise bedeutend beeinflussen können.
 
 The configuration options recognized by Git fall into two categories: client side and server side. The majority of the options are client side—configuring your personal working preferences. Although tons of options are available, I’ll only cover the few that either are commonly used or can significantly affect your workflow. Many options are useful only in edge cases that I won’t go over here. If you want to see a list of all the options your version of Git recognizes, you can run
 
