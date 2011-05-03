@@ -3,7 +3,7 @@
 baseDir=`dirname $0`
 outputDir=${baseDir}/pdf
 
-exclude=('figures' 'figures-dia' 'figures-source' 'latex' 'makepdfs' 'pdf' 'README')
+exclude=('couchapp' 'ebooks' 'epub' 'figures' 'figures-dia' 'figures-source' 'latex' 'makeebooks' 'makepdfs' 'pdf' 'README' 'summary.rb')
 dirContent=`ls $baseDir`
 argString=""
 
