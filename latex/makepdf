@@ -156,6 +156,7 @@ figures do
 			print "\t\tPass #{i + 1}... "
 			pipe("xelatex -output-directory='#{dir}' '#{dir}/main.tex' 2>&1") do |_, stdout|
 				unless $DEBUG
+					stdout.set_encoding 'ASCII-8BIT' if stdout.respond_to? :set_encoding
 					if ~ /^!\s/
 						puts "failed with:\n\t\t\t#{$_.strip}"
 						puts "\tConsider running this again with --debug."
