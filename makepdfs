@@ -16,6 +16,10 @@ for dir in $dirContent; do
 				isLang=0
 			fi
 		done
+
+		if [ ! -d "${baseDir}/${dir}" ]; then
+			isLang=0
+		fi
 		
 		if [ $isLang -eq 1 ]; then
 			argString="${argString} ${dir}"
